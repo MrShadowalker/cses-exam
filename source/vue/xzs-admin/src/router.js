@@ -167,7 +167,7 @@ const constantRoutes = [
     component: Layout,
     name: 'EducationPage',
     meta: {
-      title: '教育管理',
+      title: '课程管理',
       icon: 'education'
     },
     alwaysShow: true,

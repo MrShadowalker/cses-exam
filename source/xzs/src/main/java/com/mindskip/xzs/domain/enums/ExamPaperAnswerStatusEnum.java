@@ -1,8 +1,11 @@
 package com.mindskip.xzs.domain.enums;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
 public enum ExamPaperAnswerStatusEnum {
 
     WaitJudge(1, "待批改"),
@@ -17,16 +20,8 @@ public enum ExamPaperAnswerStatusEnum {
     }
 
 
-    public int getCode() {
-        return code;
-    }
-
     public void setCode(int code) {
         this.code = code;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {

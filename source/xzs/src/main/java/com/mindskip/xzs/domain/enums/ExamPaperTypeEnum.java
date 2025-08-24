@@ -1,8 +1,11 @@
 package com.mindskip.xzs.domain.enums;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
 public enum ExamPaperTypeEnum {
 
     Fixed(1, "固定试卷"),
@@ -31,16 +34,8 @@ public enum ExamPaperTypeEnum {
     }
 
 
-    public int getCode() {
-        return code;
-    }
-
     public void setCode(int code) {
         this.code = code;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {

@@ -1,5 +1,8 @@
 package com.mindskip.xzs.domain.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum QuestionStatusEnum {
 
     OK(1, "正常"),
@@ -14,16 +17,8 @@ public enum QuestionStatusEnum {
     }
 
 
-    public int getCode() {
-        return code;
-    }
-
     public void setCode(int code) {
         this.code = code;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {

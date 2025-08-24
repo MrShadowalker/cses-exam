@@ -1,15 +1,20 @@
 package com.mindskip.xzs.domain.enums;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
 public enum QuestionTypeEnum {
 
     SingleChoice(1, "单选题"),
     MultipleChoice(2, "多选题"),
     TrueFalse(3, "判断题"),
     GapFilling(4, "填空题"),
-    ShortAnswer(5, "简答题");
+    ShortAnswer(5, "简答题"),
+    ComplexChoice(6, "复合选择题"),
+    ;
 
     int code;
     String name;
@@ -43,16 +48,8 @@ public enum QuestionTypeEnum {
         }
     }
 
-    public int getCode() {
-        return code;
-    }
-
     public void setCode(int code) {
         this.code = code;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {

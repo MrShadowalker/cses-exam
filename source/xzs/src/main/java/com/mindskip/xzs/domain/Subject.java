@@ -1,11 +1,16 @@
 package com.mindskip.xzs.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
+@Getter
 public class Subject implements Serializable {
 
     private static final long serialVersionUID = 8058095034457106501L;
 
+    @Setter
     private Integer id;
 
     /**
@@ -16,6 +21,7 @@ public class Subject implements Serializable {
     /**
      * 年级 (1-12) 小学 初中
      */
+    @Setter
     private Integer level;
 
     /**
@@ -26,55 +32,18 @@ public class Subject implements Serializable {
     /**
      * 排序
      */
+    @Setter
     private Integer itemOrder;
 
+    @Setter
     private Boolean deleted;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
-    public String getLevelName() {
-        return levelName;
     }
 
     public void setLevelName(String levelName) {
         this.levelName = levelName == null ? null : levelName.trim();
     }
 
-    public Integer getItemOrder() {
-        return itemOrder;
-    }
-
-    public void setItemOrder(Integer itemOrder) {
-        this.itemOrder = itemOrder;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
 }

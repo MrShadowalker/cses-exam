@@ -4,18 +4,11 @@ const state = {
     sexEnum: [{key: 1, value: '男'}, {key: 2, value: '女'}],
     statusEnum: [{key: 1, value: '启用'}, {key: 2, value: '禁用'}],
     levelEnum: [
-      {key: 1, value: '一年级'},
-      {key: 2, value: '二年级'},
-      {key: 3, value: '三年级'},
-      {key: 4, value: '四年级'},
-      {key: 5, value: '五年级'},
-      {key: 6, value: '六年级'},
-      {key: 7, value: '初一'},
-      {key: 8, value: '初二'},
-      {key: 9, value: '初三'},
-      {key: 10, value: '高一'},
-      {key: 11, value: '高二'},
-      {key: 12, value: '高三'}
+      {key: 1, value: '门外汉'},
+      {key: 2, value: '初出茅庐'},
+      {key: 3, value: '渐入佳境'},
+      {key: 4, value: '炉火纯青'},
+      {key: 5, value: '登峰造极'},
     ],
     roleEnum: [{key: 1, value: '学员'}, {key: 2, value: '导师'}, {key: 3, value: '管理员'}],
     statusTag: [{key: 1, value: 'success'}, {key: 2, value: 'danger'}],
@@ -31,22 +24,25 @@ const state = {
         {key: 2, value: '多选题'},
         {key: 3, value: '判断题'},
         {key: 4, value: '填空题'},
-        {key: 5, value: '简答题'}
+        {key: 5, value: '简答题'},
+        {key: 6, value: '复合选择题'},
       ],
       editUrlEnum: [
         {key: 1, value: '/exam/question/edit/singleChoice', name: '单选题'},
         {key: 2, value: '/exam/question/edit/multipleChoice', name: '多选题'},
         {key: 3, value: '/exam/question/edit/trueFalse', name: '判断题'},
         {key: 4, value: '/exam/question/edit/gapFilling', name: '填空题'},
-        {key: 5, value: '/exam/question/edit/shortAnswer', name: '简答题'}]
+        {key: 5, value: '/exam/question/edit/shortAnswer', name: '简答题'},
+        {key: 6, value: '/exam/question/edit/complexChoice', name: '复合选择题'},
+      ]
     }
   }
 }
 
 // getters
 const getters = {
-  enumFormat: (state) => (arrary, key) => {
-    return format(arrary, key)
+  enumFormat: (state) => (array, key) => {
+    return format(array, key)
   }
 }
 
