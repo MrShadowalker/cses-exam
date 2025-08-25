@@ -1,8 +1,13 @@
 package com.mindskip.xzs.domain;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 public class TaskExamCustomerAnswer implements Serializable {
 
     private static final long serialVersionUID = -556842372977600137L;
@@ -29,43 +34,4 @@ public class TaskExamCustomerAnswer implements Serializable {
      */
     private Integer textContentId;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getTaskExamId() {
-        return taskExamId;
-    }
-
-    public void setTaskExamId(Integer taskExamId) {
-        this.taskExamId = taskExamId;
-    }
-
-    public Integer getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(Integer createUser) {
-        this.createUser = createUser;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getTextContentId() {
-        return textContentId;
-    }
-
-    public void setTextContentId(Integer textContentId) {
-        this.textContentId = textContentId;
-    }
 }

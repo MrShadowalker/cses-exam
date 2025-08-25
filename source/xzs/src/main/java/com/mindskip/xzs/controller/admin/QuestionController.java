@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 
 @RestController("AdminQuestionController")
 @RequestMapping(value = "/api/admin/question")
@@ -91,8 +92,11 @@ public class QuestionController extends BaseApiController {
         }
 
         if (qType == QuestionTypeEnum.GapFilling.getCode()) {
-            Integer fillSumScore = model.getItems().stream().mapToInt(d -> ExamUtil.scoreFromVM(d.getScore())).sum();
-            Integer questionScore = ExamUtil.scoreFromVM(model.getScore());
+            BigDecimal fillSumScore = model.getItems().stream()
+                    .map(d -> ExamUtil.scoreFromVM(d.getScore()))
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            BigDecimal questionScore = ExamUtil.scoreFromVM(model.getScore());
             if (!fillSumScore.equals(questionScore)) {
                 String errorMsg = ErrorUtil.parameterErrorFormat("score", "空分数和与题目总分不相等");
                 return new RestResponse<>(SystemCode.ParameterValidError.getCode(), errorMsg);

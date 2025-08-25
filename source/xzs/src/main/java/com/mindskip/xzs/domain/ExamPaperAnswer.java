@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Setter
@@ -34,17 +35,17 @@ public class ExamPaperAnswer implements Serializable {
     /**
      * 系统判定得分
      */
-    private Integer systemScore;
+    private BigDecimal systemScore;
 
     /**
-     * 最终得分(千分制)
+     * 最终得分
      */
-    private Integer userScore;
+    private BigDecimal userScore;
 
     /**
      * 试卷总分
      */
-    private Integer paperScore;
+    private BigDecimal paperScore;
 
     /**
      * 做对题目数量

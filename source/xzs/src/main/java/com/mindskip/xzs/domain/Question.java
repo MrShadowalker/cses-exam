@@ -2,11 +2,14 @@ package com.mindskip.xzs.domain;
 
 import com.mindskip.xzs.domain.enums.QuestionTypeEnum;
 import com.mindskip.xzs.utility.ExamUtil;
+import lombok.Getter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+@Getter
 public class Question implements Serializable {
 
     private static final long serialVersionUID = 8826266720383164363L;
@@ -26,7 +29,12 @@ public class Question implements Serializable {
     /**
      * 题目总分(千分制)
      */
-    private Integer score;
+    private BigDecimal score;
+
+    /**
+     * 算分权重
+     */
+    private BigDecimal weight;
 
     /**
      * 级别
@@ -54,7 +62,7 @@ public class Question implements Serializable {
     private Integer createUser;
 
     /**
-     * 1.正常
+     * 状态
      */
     private Integer status;
 
@@ -65,96 +73,52 @@ public class Question implements Serializable {
 
     private Boolean deleted;
 
-    public Integer getId() {
-        return id;
-    }
-
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getQuestionType() {
-        return questionType;
     }
 
     public void setQuestionType(Integer questionType) {
         this.questionType = questionType;
     }
 
-    public Integer getSubjectId() {
-        return subjectId;
-    }
-
     public void setSubjectId(Integer subjectId) {
         this.subjectId = subjectId;
     }
 
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
+    public void setScore(BigDecimal score) {
         this.score = score;
     }
 
-    public Integer getGradeLevel() {
-        return gradeLevel;
+    public void setWeight(BigDecimal weight) {
+        this.weight = weight;
     }
 
     public void setGradeLevel(Integer gradeLevel) {
         this.gradeLevel = gradeLevel;
     }
 
-    public Integer getDifficult() {
-        return difficult;
-    }
-
     public void setDifficult(Integer difficult) {
         this.difficult = difficult;
-    }
-
-    public String getCorrect() {
-        return correct;
     }
 
     public void setCorrect(String correct) {
         this.correct = correct == null ? null : correct.trim();
     }
 
-    public Integer getInfoTextContentId() {
-        return infoTextContentId;
-    }
-
     public void setInfoTextContentId(Integer infoTextContentId) {
         this.infoTextContentId = infoTextContentId;
-    }
-
-    public Integer getCreateUser() {
-        return createUser;
     }
 
     public void setCreateUser(Integer createUser) {
         this.createUser = createUser;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
     public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Boolean getDeleted() {
-        return deleted;
     }
 
     public void setDeleted(Boolean deleted) {

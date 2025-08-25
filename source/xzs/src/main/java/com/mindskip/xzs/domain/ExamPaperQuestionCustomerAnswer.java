@@ -3,6 +3,7 @@ package com.mindskip.xzs.domain;
 import lombok.Getter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
@@ -40,12 +41,12 @@ public class ExamPaperQuestionCustomerAnswer implements Serializable {
     /**
      * 得分
      */
-    private Integer customerScore;
+    private BigDecimal customerScore;
 
     /**
      * 题目原始分数
      */
-    private Integer questionScore;
+    private BigDecimal questionScore;
 
     /**
      * 问题内容
@@ -100,11 +101,11 @@ public class ExamPaperQuestionCustomerAnswer implements Serializable {
         this.subjectId = subjectId;
     }
 
-    public void setCustomerScore(Integer customerScore) {
+    public void setCustomerScore(BigDecimal customerScore) {
         this.customerScore = customerScore;
     }
 
-    public void setQuestionScore(Integer questionScore) {
+    public void setQuestionScore(BigDecimal questionScore) {
         this.questionScore = questionScore;
     }
 

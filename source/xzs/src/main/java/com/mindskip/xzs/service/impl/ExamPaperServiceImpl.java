@@ -34,6 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -171,10 +172,11 @@ public class ExamPaperServiceImpl extends BaseServiceImpl<ExamPaper> implements 
         Integer gradeLevel = subjectService.levelBySubjectId(examPaperEditRequestVM.getSubjectId());
         Integer questionCount = titleItemsVM.stream()
                 .mapToInt(t -> t.getQuestionItems().size()).sum();
-        Integer score = titleItemsVM.stream().
-                flatMapToInt(t -> t.getQuestionItems().stream()
-                        .mapToInt(q -> ExamUtil.scoreFromVM(q.getScore()))
-                ).sum();
+        BigDecimal score = titleItemsVM.stream()
+                .flatMap(t -> t.getQuestionItems().stream()
+                        .map(q -> ExamUtil.scoreFromVM(q.getScore()))
+                )
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
         examPaper.setQuestionCount(questionCount);
         examPaper.setScore(score);
         examPaper.setGradeLevel(gradeLevel);

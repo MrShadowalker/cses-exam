@@ -1,5 +1,6 @@
 package com.mindskip.xzs.utility;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ public class ExamUtil {
 
     /**
      * Score to vm string.
+     * 千分制分数转化为百分制
      *
      * @param score the score
      * @return the string
@@ -28,16 +30,25 @@ public class ExamUtil {
     }
 
     /**
+     * 精确浮点型分数转化为字符串
+     * @param score
+     * @return
+     */
+    public static String scoreToVM(BigDecimal score) {
+        return score.stripTrailingZeros().toPlainString();
+    }
+
+    /**
      * Score from vm integer.
      *
      * @param score the score
      * @return the integer
      */
-    public static Integer scoreFromVM(String score) {
+    public static BigDecimal scoreFromVM(String score) {
         if (score == null) {
             return null;
         } else {
-            return (int) (Float.parseFloat(score) * 10);
+            return BigDecimal.valueOf(Float.parseFloat(score) * 10);
         }
     }
 
@@ -68,7 +79,7 @@ public class ExamUtil {
     private static final String ANSWER_SPLIT = ",";
 
     /**
-     * Content to string string.
+     * Content to string.
      *
      * @param contentArray the content array
      * @return the string

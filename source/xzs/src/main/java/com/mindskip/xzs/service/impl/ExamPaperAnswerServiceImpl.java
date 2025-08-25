@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -113,7 +114,7 @@ public class ExamPaperAnswerServiceImpl extends BaseServiceImpl<ExamPaperAnswer>
         ExamPaperAnswer examPaperAnswer = examPaperAnswerMapper.selectByPrimaryKey(examPaperSubmitVM.getId());
         List<ExamPaperSubmitItemVM> judgeItems = examPaperSubmitVM.getAnswerItems().stream().filter(d -> d.getDoRight() == null).collect(Collectors.toList());
         List<ExamPaperAnswerUpdate> examPaperAnswerUpdates = new ArrayList<>(judgeItems.size());
-        Integer customerScore = examPaperAnswer.getUserScore();
+        BigDecimal customerScore = examPaperAnswer.getUserScore();
         Integer questionCorrect = examPaperAnswer.getQuestionCorrect();
         for (ExamPaperSubmitItemVM d : judgeItems) {
             ExamPaperAnswerUpdate examPaperAnswerUpdate = new ExamPaperAnswerUpdate();
@@ -122,7 +123,7 @@ public class ExamPaperAnswerServiceImpl extends BaseServiceImpl<ExamPaperAnswer>
             boolean doRight = examPaperAnswerUpdate.getCustomerScore().equals(ExamUtil.scoreFromVM(d.getQuestionScore()));
             examPaperAnswerUpdate.setDoRight(doRight);
             examPaperAnswerUpdates.add(examPaperAnswerUpdate);
-            customerScore += examPaperAnswerUpdate.getCustomerScore();
+            customerScore = customerScore.add(examPaperAnswerUpdate.getCustomerScore());
             if (examPaperAnswerUpdate.getDoRight()) {
                 ++questionCorrect;
             }
@@ -211,7 +212,7 @@ public class ExamPaperAnswerServiceImpl extends BaseServiceImpl<ExamPaperAnswer>
         examPaperQuestionCustomerAnswer.setQuestionType(question.getQuestionType());
         examPaperQuestionCustomerAnswer.setQuestionTextContentId(question.getInfoTextContentId());
         if (null == customerQuestionAnswer) {
-            examPaperQuestionCustomerAnswer.setCustomerScore(0);
+            examPaperQuestionCustomerAnswer.setCustomerScore(BigDecimal.valueOf(0));
         } else {
             setSpecialFromVM(examPaperQuestionCustomerAnswer, question, customerQuestionAnswer);
         }
@@ -232,28 +233,30 @@ public class ExamPaperAnswerServiceImpl extends BaseServiceImpl<ExamPaperAnswer>
             case TrueFalse:
                 examPaperQuestionCustomerAnswer.setAnswer(customerQuestionAnswer.getContent());
                 examPaperQuestionCustomerAnswer.setDoRight(question.getCorrect().equals(customerQuestionAnswer.getContent()));
-                examPaperQuestionCustomerAnswer.setCustomerScore(examPaperQuestionCustomerAnswer.getDoRight() ? question.getScore() : 0);
+                examPaperQuestionCustomerAnswer.setCustomerScore(examPaperQuestionCustomerAnswer.getDoRight() ? question.getScore() : BigDecimal.valueOf(0));
                 break;
             case MultipleChoice:
                 String customerAnswer = ExamUtil.contentToString(customerQuestionAnswer.getContentArray());
                 examPaperQuestionCustomerAnswer.setAnswer(customerAnswer);
                 examPaperQuestionCustomerAnswer.setDoRight(customerAnswer.equals(question.getCorrect()));
-                examPaperQuestionCustomerAnswer.setCustomerScore(examPaperQuestionCustomerAnswer.getDoRight() ? question.getScore() : 0);
+                examPaperQuestionCustomerAnswer.setCustomerScore(examPaperQuestionCustomerAnswer.getDoRight() ? question.getScore() : BigDecimal.valueOf(0));
                 break;
             case GapFilling:
                 String correctAnswer = JsonUtil.toJsonStr(customerQuestionAnswer.getContentArray());
                 examPaperQuestionCustomerAnswer.setAnswer(correctAnswer);
-                examPaperQuestionCustomerAnswer.setCustomerScore(0);
+                examPaperQuestionCustomerAnswer.setCustomerScore(BigDecimal.valueOf(0));
                 break;
             default:
                 examPaperQuestionCustomerAnswer.setAnswer(customerQuestionAnswer.getContent());
-                examPaperQuestionCustomerAnswer.setCustomerScore(0);
+                examPaperQuestionCustomerAnswer.setCustomerScore(BigDecimal.valueOf(0));
                 break;
         }
     }
 
     private ExamPaperAnswer ExamPaperAnswerFromVM(ExamPaperSubmitVM examPaperSubmitVM, ExamPaper examPaper, List<ExamPaperQuestionCustomerAnswer> examPaperQuestionCustomerAnswers, User user, Date now) {
-        Integer systemScore = examPaperQuestionCustomerAnswers.stream().mapToInt(a -> a.getCustomerScore()).sum();
+        BigDecimal systemScore = examPaperQuestionCustomerAnswers.stream()
+                .map(ExamPaperQuestionCustomerAnswer::getCustomerScore)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
         long questionCorrect = examPaperQuestionCustomerAnswers.stream().filter(a -> a.getCustomerScore().equals(a.getQuestionScore())).count();
         ExamPaperAnswer examPaperAnswer = new ExamPaperAnswer();
         examPaperAnswer.setPaperName(examPaper.getName());

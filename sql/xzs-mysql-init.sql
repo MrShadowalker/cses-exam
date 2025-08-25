@@ -1,3 +1,6 @@
+CREATE database if NOT EXISTS `cses` default character set utf8mb4 collate utf8mb4_unicode_ci;
+USE `cses`;
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -11,7 +14,7 @@ CREATE TABLE `t_exam_paper`  (
   `subject_id` int NULL DEFAULT NULL,
   `paper_type` int NULL DEFAULT NULL,
   `grade_level` int NULL DEFAULT NULL,
-  `score` int NULL DEFAULT NULL,
+  `score` decimal(10,3) NULL DEFAULT NULL comment '试卷总分',
   `question_count` int NULL DEFAULT NULL,
   `suggest_time` int NULL DEFAULT NULL,
   `limit_start_time` datetime NULL DEFAULT NULL,
@@ -38,9 +41,9 @@ CREATE TABLE `t_exam_paper_answer`  (
   `paper_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `paper_type` int NULL DEFAULT NULL,
   `subject_id` int NULL DEFAULT NULL,
-  `system_score` int NULL DEFAULT NULL,
-  `user_score` int NULL DEFAULT NULL,
-  `paper_score` int NULL DEFAULT NULL,
+  `system_score` decimal(10,3) NULL DEFAULT NULL,
+  `user_score` decimal(10,3) NULL DEFAULT NULL,
+  `paper_score` decimal(10,3) NULL DEFAULT NULL,
   `question_correct` int NULL DEFAULT NULL,
   `question_count` int NULL DEFAULT NULL,
   `do_time` int NULL DEFAULT NULL,
@@ -66,8 +69,8 @@ CREATE TABLE `t_exam_paper_question_customer_answer`  (
   `exam_paper_answer_id` int NULL DEFAULT NULL,
   `question_type` int NULL DEFAULT NULL,
   `subject_id` int NULL DEFAULT NULL,
-  `customer_score` int NULL DEFAULT NULL,
-  `question_score` int NULL DEFAULT NULL,
+  `customer_score` decimal(10,3) NULL DEFAULT NULL,
+  `question_score` decimal(10,3) NULL DEFAULT NULL,
   `question_text_content_id` int NULL DEFAULT NULL,
   `answer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `text_content_id` int NULL DEFAULT NULL,
@@ -131,7 +134,8 @@ CREATE TABLE `t_question`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `question_type` int NULL DEFAULT NULL,
   `subject_id` int NULL DEFAULT NULL,
-  `score` int NULL DEFAULT NULL,
+  `score` decimal(10,3) NULL DEFAULT NULL,
+  `weight` decimal(10,3) NULL DEFAULT NULL,
   `grade_level` int NULL DEFAULT NULL,
   `difficult` int NULL DEFAULT NULL,
   `correct` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,

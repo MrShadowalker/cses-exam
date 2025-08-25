@@ -23,6 +23,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @RestController("StudentExamPaperAnswerController")
@@ -70,7 +71,7 @@ public class ExamPaperAnswerController extends BaseApiController {
             return RestResponse.fail(2, "试卷不能重复做");
         }
         ExamPaperAnswer examPaperAnswer = examPaperAnswerInfo.getExamPaperAnswer();
-        Integer userScore = examPaperAnswer.getUserScore();
+        BigDecimal userScore = examPaperAnswer.getUserScore();
         String scoreVm = ExamUtil.scoreToVM(userScore);
         UserEventLog userEventLog = new UserEventLog(user.getId(), user.getUserName(), user.getRealName(), new Date());
         String content = user.getUserName() + " 提交试卷：" + examPaperAnswerInfo.getExamPaper().getName()

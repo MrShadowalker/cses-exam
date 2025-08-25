@@ -1,5 +1,6 @@
 package com.mindskip.xzs.domain;
 
+import com.mindskip.xzs.domain.enums.PhaseEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,18 +15,18 @@ public class Subject implements Serializable {
     private Integer id;
 
     /**
-     * 语文 数学 英语 等
+     * @see PhaseEnum
      */
     private String name;
 
     /**
-     * 年级 (1-12) 小学 初中
+     * 每个环节（科目）各五个级别
      */
     @Setter
     private Integer level;
 
     /**
-     * 一年级、二年级等
+     * 每个环节（科目）各五个级别
      */
     private String levelName;
 

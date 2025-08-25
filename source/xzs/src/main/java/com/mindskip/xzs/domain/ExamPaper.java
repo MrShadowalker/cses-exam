@@ -3,6 +3,7 @@ package com.mindskip.xzs.domain;
 import lombok.Getter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
@@ -18,14 +19,14 @@ public class ExamPaper implements Serializable {
     private String name;
 
     /**
-     * 学科
-     */
-    private Integer subjectId;
-
-    /**
      * 试卷类型( 1固定试卷 4.时段试卷 6.任务试卷)
      */
     private Integer paperType;
+
+    /**
+     * 学科
+     */
+    private Integer subjectId;
 
     /**
      * 年级
@@ -33,9 +34,29 @@ public class ExamPaper implements Serializable {
     private Integer gradeLevel;
 
     /**
-     * 试卷总分(千分制)
+     * 试卷用户
      */
-    private Integer score;
+    private Integer userId;
+
+    /**
+     * 试卷用户名
+     */
+    private String userName;
+
+    /**
+     * 试卷用户真实姓名
+     */
+    private String userRealName;
+
+    /**
+     * 试卷用户手机号
+     */
+    private String userPhone;
+
+    /**
+     * 试卷总分
+     */
+    private BigDecimal score;
 
     /**
      * 题目数量
@@ -90,7 +111,7 @@ public class ExamPaper implements Serializable {
         this.gradeLevel = gradeLevel;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(BigDecimal score) {
         this.score = score;
     }
 

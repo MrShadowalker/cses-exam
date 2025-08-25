@@ -1,8 +1,11 @@
 package com.mindskip.xzs.domain;
 
+import lombok.Getter;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Getter
 public class TextContent implements Serializable {
 
     private static final long serialVersionUID = -1279530310964668131L;
@@ -28,24 +31,12 @@ public class TextContent implements Serializable {
      */
     private Date createTime;
 
-    public Integer getId() {
-        return id;
-    }
-
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
-    }
-
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
     }
 
     public void setCreateTime(Date createTime) {

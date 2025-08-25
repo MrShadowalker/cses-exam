@@ -114,6 +114,7 @@ public class QuestionServiceImpl extends BaseServiceImpl<Question> implements Qu
         TextContent questionInfoTextContent = textContentService.selectById(question.getInfoTextContentId());
         QuestionObject questionObject = JsonUtil.toJsonObject(questionInfoTextContent.getContent(), QuestionObject.class);
         QuestionEditRequestVM questionEditRequestVM = modelMapper.map(question, QuestionEditRequestVM.class);
+        assert questionObject != null;
         questionEditRequestVM.setTitle(questionObject.getTitleContent());
 
         //答案
@@ -127,7 +128,7 @@ public class QuestionServiceImpl extends BaseServiceImpl<Question> implements Qu
                 questionEditRequestVM.setCorrectArray(ExamUtil.contentToArray(question.getCorrect()));
                 break;
             case GapFilling:
-                List<String> correctContent = questionObject.getQuestionItemObjects().stream().map(d -> d.getContent()).collect(Collectors.toList());
+                List<String> correctContent = questionObject.getQuestionItemObjects().stream().map(QuestionItemObject::getContent).collect(Collectors.toList());
                 questionEditRequestVM.setCorrectArray(correctContent);
                 break;
             case ShortAnswer:
