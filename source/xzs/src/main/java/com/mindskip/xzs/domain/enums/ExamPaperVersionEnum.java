@@ -4,6 +4,9 @@ import lombok.Getter;
 
 import java.util.*;
 
+/**
+ * 试卷版本
+ */
 @Getter
 public enum ExamPaperVersionEnum {
 

@@ -1,11 +1,16 @@
 package com.mindskip.xzs.domain;
 
-import com.mindskip.xzs.domain.enums.PhaseEnum;
+import com.mindskip.xzs.domain.enums.SubjectEnum;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
 
+
+/**
+ * 科目
+ * @see SubjectEnum
+ */
 @Getter
 public class Subject implements Serializable {
 
@@ -15,7 +20,7 @@ public class Subject implements Serializable {
     private Integer id;
 
     /**
-     * @see PhaseEnum
+     * @see SubjectEnum#getName()
      */
     private String name;
 

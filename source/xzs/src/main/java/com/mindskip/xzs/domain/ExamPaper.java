@@ -49,11 +49,6 @@ public class ExamPaper implements Serializable {
     private String userRealName;
 
     /**
-     * 试卷用户手机号
-     */
-    private String userPhone;
-
-    /**
      * 试卷总分
      */
     private BigDecimal score;

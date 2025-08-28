@@ -36,9 +36,14 @@ public class User implements Serializable {
     private Date birthDay;
 
     /**
-     * 学生等级
+     * 等级
      */
     private Integer userLevel;
+
+    /**
+     * 称号
+     */
+    private String title;
 
     private String phone;
 

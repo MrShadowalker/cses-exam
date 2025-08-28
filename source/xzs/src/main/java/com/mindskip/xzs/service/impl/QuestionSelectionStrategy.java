@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.mindskip.xzs.domain.enums.TargetTypeEnum.TYB;
 
 public class QuestionSelectionStrategy {
     /**
@@ -21,16 +20,16 @@ public class QuestionSelectionStrategy {
         List<TargetTypeEnum> targetTypes = new ArrayList<>();
         switch (paperType) {
             case EXPERIENCE:
-                targetTypes.add(TYB);
+                targetTypes.add(TargetTypeEnum.ADULT);
                 break;
             case STANDARD:
-                targetTypes.addAll(Arrays.asList(TargetTypeEnum.BZB, TargetTypeEnum.CY, TargetTypeEnum.GG));
+                targetTypes.addAll(Arrays.asList(TargetTypeEnum.ADULT, TargetTypeEnum.ENTREPRENEURSHIP, TargetTypeEnum.EXECUTIVE));
                 break;
             case TEENAGER:
-                targetTypes.add(TargetTypeEnum.QSN);
+                targetTypes.add(TargetTypeEnum.TEENAGER);
                 break;
             case CHILD:
-                targetTypes.add(TargetTypeEnum.ET);
+                targetTypes.add(TargetTypeEnum.CHILD);
                 break;
             default:
                 throw new IllegalArgumentException("不支持的试卷类型: " + paperType);

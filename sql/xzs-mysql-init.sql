@@ -6,6 +6,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for t_exam_paper
+-- 试卷模板
 -- ----------------------------
 DROP TABLE IF EXISTS `t_exam_paper`;
 CREATE TABLE `t_exam_paper`  (
@@ -14,6 +15,33 @@ CREATE TABLE `t_exam_paper`  (
   `subject_id` int NULL DEFAULT NULL,
   `paper_type` int NULL DEFAULT NULL,
   `grade_level` int NULL DEFAULT NULL,
+  `version` int NULL DEFAULT NULL comment '版本',
+  `score` decimal(10,3) NULL DEFAULT NULL comment '试卷总分',
+  `question_count` int NULL DEFAULT NULL,
+  `suggest_time` int NULL DEFAULT NULL,
+  `limit_start_time` datetime NULL DEFAULT NULL,
+  `limit_end_time` datetime NULL DEFAULT NULL,
+  `frame_text_content_id` int NULL DEFAULT NULL,
+  `create_user` int NULL DEFAULT NULL,
+  `create_time` datetime NULL DEFAULT NULL,
+  `deleted` bit(1) NULL DEFAULT NULL,
+  `task_exam_id` int NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Table structure for t_exam_user_paper
+-- 用户试卷
+-- ----------------------------
+DROP TABLE IF EXISTS `t_exam_user_paper`;
+CREATE TABLE `t_exam_user_paper`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `paper_type` int NULL DEFAULT NULL,
+  `subject_id` int NULL DEFAULT NULL,
+  `grade_level` int NULL DEFAULT NULL,
+  `version` int NULL DEFAULT NULL comment '版本',
+  `user_id` int NULL DEFAULT NULL comment '用户ID',
   `score` decimal(10,3) NULL DEFAULT NULL comment '试卷总分',
   `question_count` int NULL DEFAULT NULL,
   `suggest_time` int NULL DEFAULT NULL,
@@ -133,6 +161,8 @@ DROP TABLE IF EXISTS `t_question`;
 CREATE TABLE `t_question`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `question_type` int NULL DEFAULT NULL,
+  `question_target_type` varchar(32) NULL DEFAULT NULL,
+  `question_scene` varchar(32) NULL DEFAULT NULL,
   `subject_id` int NULL DEFAULT NULL,
   `score` decimal(10,3) NULL DEFAULT NULL,
   `weight` decimal(10,3) NULL DEFAULT NULL,

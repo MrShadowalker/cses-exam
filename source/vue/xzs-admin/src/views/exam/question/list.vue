@@ -7,23 +7,22 @@
       <el-form-item label="题目内容：">
         <el-input v-model="queryParam.content" clearable></el-input>
       </el-form-item>
-
-      <el-form-item label="年级：">
-        <el-select v-model="queryParam.level" placeholder="年级"  @change="levelChange" clearable>
-          <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="学科：">
-        <el-select v-model="queryParam.subjectId" clearable>
-          <el-option v-for="item in subjectFilter" :key="item.id" :value="item.id"
-                     :label="item.name+' ( '+item.levelName+' )'"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="题型：">
-        <el-select v-model="queryParam.questionType" clearable>
-          <el-option v-for="item in questionType" :key="item.key" :value="item.key" :label="item.value"></el-option>
-        </el-select>
-      </el-form-item>
+<!--      <el-form-item label="等级：">-->
+<!--        <el-select v-model="queryParam.level" placeholder="等级"  @change="levelChange" clearable>-->
+<!--          <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="科目：">-->
+<!--        <el-select v-model="queryParam.subjectId" clearable>-->
+<!--          <el-option v-for="item in subjectFilter" :key="item.id" :value="item.id"-->
+<!--                     :label="item.name+' ( '+item.levelName+' )'"></el-option>-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="题型：">-->
+<!--        <el-select v-model="queryParam.questionType" clearable>-->
+<!--          <el-option v-for="item in questionType" :key="item.key" :value="item.key" :label="item.value"></el-option>-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" @click="submitForm">查询</el-button>
         <el-popover placement="bottom" trigger="click">
@@ -36,7 +35,7 @@
     </el-form>
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column prop="id" label="Id" width="90px"/>
-      <el-table-column prop="subjectId" label="学科" :formatter="subjectFormatter" width="120px"/>
+      <el-table-column prop="subjectId" label="科目" :formatter="subjectFormatter" width="120px"/>
       <el-table-column prop="questionType" label="题型" :formatter="questionTypeFormatter" width="70px"/>
       <el-table-column prop="shortTitle" label="题干" show-overflow-tooltip/>
       <el-table-column prop="score" label="分数" width="60px"/>
@@ -152,7 +151,6 @@ export default {
     ...mapState('enumItem', {
       questionType: state => state.exam.question.typeEnum,
       editUrlEnum: state => state.exam.question.editUrlEnum,
-      levelEnum: state => state.user.levelEnum
     }),
     ...mapGetters('exam', ['subjectEnumFormat']),
     ...mapState('exam', { subjects: state => state.subjects })

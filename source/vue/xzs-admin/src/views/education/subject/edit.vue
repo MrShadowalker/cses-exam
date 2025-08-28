@@ -2,7 +2,7 @@
   <div class="app-container">
 
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading">
-      <el-form-item label="学科：" required>
+      <el-form-item label="科目：" required>
         <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="等级：" required>

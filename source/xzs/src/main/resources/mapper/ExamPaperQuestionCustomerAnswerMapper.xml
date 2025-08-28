@@ -8,8 +8,8 @@
     <result column="exam_paper_answer_id" jdbcType="INTEGER" property="examPaperAnswerId" />
     <result column="question_type" jdbcType="INTEGER" property="questionType" />
     <result column="subject_id" jdbcType="INTEGER" property="subjectId" />
-    <result column="customer_score" jdbcType="INTEGER" property="customerScore" />
-    <result column="question_score" jdbcType="INTEGER" property="questionScore" />
+    <result column="customer_score" jdbcType="DECIMAL" property="customerScore" />
+    <result column="question_score" jdbcType="DECIMAL" property="questionScore" />
     <result column="question_text_content_id" jdbcType="INTEGER" property="questionTextContentId" />
     <result column="answer" jdbcType="VARCHAR" property="answer" />
     <result column="text_content_id" jdbcType="INTEGER" property="textContentId" />
@@ -42,7 +42,7 @@
       )
     values (#{id,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER}, #{examPaperId,jdbcType=INTEGER},
       #{examPaperAnswerId,jdbcType=INTEGER}, #{questionType,jdbcType=INTEGER}, #{subjectId,jdbcType=INTEGER},
-      #{customerScore,jdbcType=INTEGER}, #{questionScore,jdbcType=INTEGER}, #{questionTextContentId,jdbcType=INTEGER},
+      #{customerScore,jdbcType=DECIMAL}, #{questionScore,jdbcType=DECIMAL}, #{questionTextContentId,jdbcType=INTEGER},
       #{answer,jdbcType=VARCHAR}, #{textContentId,jdbcType=INTEGER}, #{doRight,jdbcType=BIT},
       #{createUser,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{itemOrder,jdbcType=INTEGER}
       )
@@ -116,10 +116,10 @@
         #{subjectId,jdbcType=INTEGER},
       </if>
       <if test="customerScore != null">
-        #{customerScore,jdbcType=INTEGER},
+        #{customerScore,jdbcType=DECIMAL},
       </if>
       <if test="questionScore != null">
-        #{questionScore,jdbcType=INTEGER},
+        #{questionScore,jdbcType=DECIMAL},
       </if>
       <if test="questionTextContentId != null">
         #{questionTextContentId,jdbcType=INTEGER},
@@ -163,10 +163,10 @@
         subject_id = #{subjectId,jdbcType=INTEGER},
       </if>
       <if test="customerScore != null">
-        customer_score = #{customerScore,jdbcType=INTEGER},
+        customer_score = #{customerScore,jdbcType=DECIMAL},
       </if>
       <if test="questionScore != null">
-        question_score = #{questionScore,jdbcType=INTEGER},
+        question_score = #{questionScore,jdbcType=DECIMAL},
       </if>
       <if test="questionTextContentId != null">
         question_text_content_id = #{questionTextContentId,jdbcType=INTEGER},
@@ -199,8 +199,8 @@
       exam_paper_answer_id = #{examPaperAnswerId,jdbcType=INTEGER},
       question_type = #{questionType,jdbcType=INTEGER},
       subject_id = #{subjectId,jdbcType=INTEGER},
-      customer_score = #{customerScore,jdbcType=INTEGER},
-      question_score = #{questionScore,jdbcType=INTEGER},
+      customer_score = #{customerScore,jdbcType=DECIMAL},
+      question_score = #{questionScore,jdbcType=DECIMAL},
       question_text_content_id = #{questionTextContentId,jdbcType=INTEGER},
       answer = #{answer,jdbcType=VARCHAR},
       text_content_id = #{textContentId,jdbcType=INTEGER},
@@ -251,7 +251,7 @@
       ( #{item.questionId,jdbcType=INTEGER}, #{item.questionScore,jdbcType=INTEGER},
       #{item.subjectId,jdbcType=INTEGER}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.createUser,jdbcType=INTEGER},
       #{item.textContentId,jdbcType=INTEGER}, #{item.examPaperId,jdbcType=INTEGER}, #{item.questionType,jdbcType=INTEGER},
-      #{item.answer,jdbcType=VARCHAR}, #{item.customerScore,jdbcType=INTEGER}, #{item.examPaperAnswerId,jdbcType=INTEGER},
+      #{item.answer,jdbcType=VARCHAR}, #{item.customerScore,jdbcType=DECIMAL}, #{item.examPaperAnswerId,jdbcType=INTEGER},
       #{item.doRight,jdbcType=BIT},#{item.questionTextContentId,jdbcType=INTEGER},#{item.itemOrder,jdbcType=INTEGER})
     </foreach>
   </insert>

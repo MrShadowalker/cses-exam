@@ -5,6 +5,11 @@ import lombok.Getter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 开源版本提供了 1-5 五种题型
+ *
+ * 目前题库优先按照 6 复合选择题设计
+ */
 @Getter
 public enum QuestionTypeEnum {
 
@@ -47,14 +52,5 @@ public enum QuestionTypeEnum {
                 return false;
         }
     }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
 
 }

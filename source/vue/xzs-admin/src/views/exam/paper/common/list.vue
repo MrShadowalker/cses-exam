@@ -40,7 +40,7 @@
 
 <script>
 import { mapGetters, mapState, mapActions } from 'vuex'
-import Pagination from '@/components/Pagination/index.vue'
+import Pagination from '@/components/Pagination'
 import examPaperApi from '@/api/examPaper'
 
 export default {

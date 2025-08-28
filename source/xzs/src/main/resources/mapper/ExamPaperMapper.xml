@@ -7,7 +7,7 @@
     <result column="subject_id" jdbcType="INTEGER" property="subjectId" />
     <result column="paper_type" jdbcType="INTEGER" property="paperType" />
     <result column="grade_level" jdbcType="INTEGER" property="gradeLevel" />
-    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
     <result column="question_count" jdbcType="INTEGER" property="questionCount" />
     <result column="suggest_time" jdbcType="INTEGER" property="suggestTime" />
     <result column="limit_start_time" jdbcType="TIMESTAMP" property="limitStartTime" />
@@ -41,7 +41,7 @@
       create_time, deleted, task_exam_id
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{subjectId,jdbcType=INTEGER},
-      #{paperType,jdbcType=INTEGER}, #{gradeLevel,jdbcType=INTEGER}, #{score,jdbcType=INTEGER},
+      #{paperType,jdbcType=INTEGER}, #{gradeLevel,jdbcType=INTEGER}, #{score,jdbcType=DECIMAL},
       #{questionCount,jdbcType=INTEGER}, #{suggestTime,jdbcType=INTEGER}, #{limitStartTime,jdbcType=TIMESTAMP},
       #{limitEndTime,jdbcType=TIMESTAMP}, #{frameTextContentId,jdbcType=INTEGER}, #{createUser,jdbcType=INTEGER},
       #{createTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{taskExamId,jdbcType=INTEGER}
@@ -113,7 +113,7 @@
         #{gradeLevel,jdbcType=INTEGER},
       </if>
       <if test="score != null">
-        #{score,jdbcType=INTEGER},
+        #{score,jdbcType=DECIMAL},
       </if>
       <if test="questionCount != null">
         #{questionCount,jdbcType=INTEGER},
@@ -160,7 +160,7 @@
         grade_level = #{gradeLevel,jdbcType=INTEGER},
       </if>
       <if test="score != null">
-        score = #{score,jdbcType=INTEGER},
+        score = #{score,jdbcType=DECIMAL},
       </if>
       <if test="questionCount != null">
         question_count = #{questionCount,jdbcType=INTEGER},
@@ -198,7 +198,7 @@
       subject_id = #{subjectId,jdbcType=INTEGER},
       paper_type = #{paperType,jdbcType=INTEGER},
       grade_level = #{gradeLevel,jdbcType=INTEGER},
-      score = #{score,jdbcType=INTEGER},
+      score = #{score,jdbcType=DECIMAL},
       question_count = #{questionCount,jdbcType=INTEGER},
       suggest_time = #{suggestTime,jdbcType=INTEGER},
       limit_start_time = #{limitStartTime,jdbcType=TIMESTAMP},

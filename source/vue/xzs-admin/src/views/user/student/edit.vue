@@ -25,8 +25,8 @@
       <el-form-item label="手机：">
         <el-input v-model="form.phone"></el-input>
       </el-form-item>
-      <el-form-item label="年级：" prop="userLevel" required>
-        <el-select v-model="form.userLevel" placeholder="年级">
+      <el-form-item label="等级：" prop="userLevel" required>
+        <el-select v-model="form.userLevel" placeholder="等级">
           <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
       </el-form-item>
@@ -72,7 +72,7 @@ export default {
           { required: true, message: '请输入真实姓名', trigger: 'blur' }
         ],
         userLevel: [
-          { required: true, message: '请选择年级', trigger: 'change' }
+          { required: true, message: '请选择等级', trigger: 'change' }
         ]
       }
     }

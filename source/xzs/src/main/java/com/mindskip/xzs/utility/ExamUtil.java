@@ -35,6 +35,9 @@ public class ExamUtil {
      * @return
      */
     public static String scoreToVM(BigDecimal score) {
+        if (score == null) {
+            return null;
+        }
         return score.stripTrailingZeros().toPlainString();
     }
 

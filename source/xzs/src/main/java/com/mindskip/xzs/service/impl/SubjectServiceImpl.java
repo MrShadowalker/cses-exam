@@ -44,7 +44,11 @@ public class SubjectServiceImpl extends BaseServiceImpl<Subject> implements Subj
 
     @Override
     public Integer levelBySubjectId(Integer id) {
-        return this.selectById(id).getLevel();
+        Subject subject = this.selectById(id);
+        if (subject == null) {
+            throw new IllegalArgumentException("Subject not found with id: " + id);
+        }
+        return subject.getLevel();
     }
 
     @Override

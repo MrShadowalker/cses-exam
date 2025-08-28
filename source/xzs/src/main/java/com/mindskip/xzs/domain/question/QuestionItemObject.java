@@ -17,11 +17,14 @@ public class QuestionItemObject {
     // 选项内容
     private String content;
 
+    // 选项所属等级
+    private String level;
+
     // 答案算分
     private BigDecimal score;
 
     // 答案算分权重
-    private BigDecimal weight;
+//    private BigDecimal weight;
 
     private String itemUuid;
 

@@ -7,9 +7,9 @@
     <result column="paper_name" jdbcType="VARCHAR" property="paperName" />
     <result column="paper_type" jdbcType="INTEGER" property="paperType" />
     <result column="subject_id" jdbcType="INTEGER" property="subjectId" />
-    <result column="system_score" jdbcType="INTEGER" property="systemScore" />
-    <result column="user_score" jdbcType="INTEGER" property="userScore" />
-    <result column="paper_score" jdbcType="INTEGER" property="paperScore" />
+    <result column="system_score" jdbcType="DECIMAL" property="systemScore" />
+    <result column="user_score" jdbcType="DECIMAL" property="userScore" />
+    <result column="paper_score" jdbcType="DECIMAL" property="paperScore" />
     <result column="question_correct" jdbcType="INTEGER" property="questionCorrect" />
     <result column="question_count" jdbcType="INTEGER" property="questionCount" />
     <result column="do_time" jdbcType="INTEGER" property="doTime" />
@@ -41,8 +41,8 @@
       create_user, create_time, task_exam_id
       )
     values (#{id,jdbcType=INTEGER}, #{examPaperId,jdbcType=INTEGER}, #{paperName,jdbcType=VARCHAR},
-      #{paperType,jdbcType=INTEGER}, #{subjectId,jdbcType=INTEGER}, #{systemScore,jdbcType=INTEGER},
-      #{userScore,jdbcType=INTEGER}, #{paperScore,jdbcType=INTEGER}, #{questionCorrect,jdbcType=INTEGER},
+      #{paperType,jdbcType=INTEGER}, #{subjectId,jdbcType=INTEGER}, #{systemScore,jdbcType=DECIMAL},
+      #{userScore,jdbcType=DECIMAL}, #{paperScore,jdbcType=DECIMAL}, #{questionCorrect,jdbcType=INTEGER},
       #{questionCount,jdbcType=INTEGER}, #{doTime,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
       #{createUser,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{taskExamId,jdbcType=INTEGER}
       )
@@ -113,13 +113,13 @@
         #{subjectId,jdbcType=INTEGER},
       </if>
       <if test="systemScore != null">
-        #{systemScore,jdbcType=INTEGER},
+        #{systemScore,jdbcType=DECIMAL},
       </if>
       <if test="userScore != null">
-        #{userScore,jdbcType=INTEGER},
+        #{userScore,jdbcType=DECIMAL},
       </if>
       <if test="paperScore != null">
-        #{paperScore,jdbcType=INTEGER},
+        #{paperScore,jdbcType=DECIMAL},
       </if>
       <if test="questionCorrect != null">
         #{questionCorrect,jdbcType=INTEGER},
@@ -160,13 +160,13 @@
         subject_id = #{subjectId,jdbcType=INTEGER},
       </if>
       <if test="systemScore != null">
-        system_score = #{systemScore,jdbcType=INTEGER},
+        system_score = #{systemScore,jdbcType=DECIMAL},
       </if>
       <if test="userScore != null">
-        user_score = #{userScore,jdbcType=INTEGER},
+        user_score = #{userScore,jdbcType=DECIMAL},
       </if>
       <if test="paperScore != null">
-        paper_score = #{paperScore,jdbcType=INTEGER},
+        paper_score = #{paperScore,jdbcType=DECIMAL},
       </if>
       <if test="questionCorrect != null">
         question_correct = #{questionCorrect,jdbcType=INTEGER},
@@ -198,9 +198,9 @@
       paper_name = #{paperName,jdbcType=VARCHAR},
       paper_type = #{paperType,jdbcType=INTEGER},
       subject_id = #{subjectId,jdbcType=INTEGER},
-      system_score = #{systemScore,jdbcType=INTEGER},
-      user_score = #{userScore,jdbcType=INTEGER},
-      paper_score = #{paperScore,jdbcType=INTEGER},
+      system_score = #{systemScore,jdbcType=DECIMAL},
+      user_score = #{userScore,jdbcType=DECIMAL},
+      paper_score = #{paperScore,jdbcType=DECIMAL},
       question_correct = #{questionCorrect,jdbcType=INTEGER},
       question_count = #{questionCount,jdbcType=INTEGER},
       do_time = #{doTime,jdbcType=INTEGER},

@@ -1,5 +1,6 @@
 package com.mindskip.xzs.service.impl;
 
+import com.mindskip.xzs.domain.enums.TargetTypeEnum;
 import com.mindskip.xzs.domain.other.KeyValue;
 import com.mindskip.xzs.domain.Question;
 import com.mindskip.xzs.domain.TextContent;
@@ -57,7 +58,6 @@ public class QuestionServiceImpl extends BaseServiceImpl<Question> implements Qu
     @Transactional
     public Question insertFullQuestion(QuestionEditRequestVM model, Integer userId) {
         Date now = new Date();
-        Integer gradeLevel = subjectService.levelBySubjectId(model.getSubjectId());
 
         //题干、解析、选项等 插入
         TextContent infoTextContent = new TextContent();
@@ -67,12 +67,18 @@ public class QuestionServiceImpl extends BaseServiceImpl<Question> implements Qu
 
         Question question = new Question();
         question.setSubjectId(model.getSubjectId());
-        question.setGradeLevel(gradeLevel);
+        if (model.getQuestionType() != QuestionTypeEnum.ComplexChoice.getCode()) {
+            Integer gradeLevel = subjectService.levelBySubjectId(model.getSubjectId());
+            question.setGradeLevel(gradeLevel);
+        }
+        question.setQuestionTargetType(model.getTargetType());
+        question.setQuestionScene(model.getScene());
         question.setCreateTime(now);
         question.setQuestionType(model.getQuestionType());
         question.setStatus(QuestionStatusEnum.OK.getCode());
         question.setCorrectFromVM(model.getCorrect(), model.getCorrectArray());
         question.setScore(ExamUtil.scoreFromVM(model.getScore()));
+        question.setWeight(ExamUtil.scoreFromVM(model.getWeight()));
         question.setDifficult(model.getDifficult());
         question.setInfoTextContentId(infoTextContent.getId());
         question.setCreateUser(userId);
@@ -84,11 +90,17 @@ public class QuestionServiceImpl extends BaseServiceImpl<Question> implements Qu
     @Override
     @Transactional
     public Question updateFullQuestion(QuestionEditRequestVM model) {
-        Integer gradeLevel = subjectService.levelBySubjectId(model.getSubjectId());
+
         Question question = questionMapper.selectByPrimaryKey(model.getId());
         question.setSubjectId(model.getSubjectId());
-        question.setGradeLevel(gradeLevel);
+        question.setQuestionTargetType(model.getTargetType());
+        question.setQuestionScene(model.getScene());
+        if (model.getQuestionType() != QuestionTypeEnum.ComplexChoice.getCode()) {
+            Integer gradeLevel = subjectService.levelBySubjectId(model.getSubjectId());
+            question.setGradeLevel(gradeLevel);
+        }
         question.setScore(ExamUtil.scoreFromVM(model.getScore()));
+        question.setWeight(ExamUtil.scoreFromVM(model.getWeight()));
         question.setDifficult(model.getDifficult());
         question.setCorrectFromVM(model.getCorrect(), model.getCorrectArray());
         questionMapper.updateByPrimaryKeySelective(question);

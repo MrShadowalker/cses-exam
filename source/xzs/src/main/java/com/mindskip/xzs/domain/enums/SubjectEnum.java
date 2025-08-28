@@ -6,10 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 环节枚举
  * @author Shadowalker
  */
 @Getter
-public enum PhaseEnum {
+public enum SubjectEnum {
     INFORMATION(1, "信息获取"),
     ANALYSIS(2, "分析处理"),
     DECISION(3, "决策选择"),
@@ -20,13 +21,13 @@ public enum PhaseEnum {
     Integer code;
     String name;
 
-    PhaseEnum(Integer code, String name) {
+    SubjectEnum(Integer code, String name) {
         this.code = code;
         this.name = name;
     }
 
-    public static PhaseEnum fromCode(Integer code) {
-        for (PhaseEnum item : PhaseEnum.values()) {
+    public static SubjectEnum fromCode(Integer code) {
+        for (SubjectEnum item : SubjectEnum.values()) {
             if (item.getCode().equals(code)) {
                 return item;
             }
@@ -34,8 +35,8 @@ public enum PhaseEnum {
         return null;
     }
 
-    public static PhaseEnum fromName(String name) {
-        for (PhaseEnum item : PhaseEnum.values()) {
+    public static SubjectEnum fromName(String name) {
+        for (SubjectEnum item : SubjectEnum.values()) {
             if (item.getName().equals(name)) {
                 return item;
             }
@@ -43,11 +44,11 @@ public enum PhaseEnum {
         return null;
     }
 
-    // 新增阶段场景数量常量定义
-    public static final Map<PhaseEnum, Map<SceneEnum, Integer>> PHASE_SCENE_RULES;
+    // 新增标准版试卷环节场景数量常量定义
+    public static final Map<SubjectEnum, Map<SceneEnum, Integer>> STANDARD_SUBJECT_SCENE_RULES;
 
     static {
-        PHASE_SCENE_RULES = new HashMap<>();
+        STANDARD_SUBJECT_SCENE_RULES = new HashMap<>();
 
         // 信息获取阶段规则
         Map<SceneEnum, Integer> infoRules = new HashMap<>();
@@ -56,7 +57,7 @@ public enum PhaseEnum {
         infoRules.put(SceneEnum.SOCIAL, 1);
         infoRules.put(SceneEnum.STUDY, 1);
         infoRules.put(SceneEnum.HEALTH, 1);
-        PHASE_SCENE_RULES.put(INFORMATION, infoRules);
+        STANDARD_SUBJECT_SCENE_RULES.put(INFORMATION, infoRules);
 
         // 分析处理阶段规则
         Map<SceneEnum, Integer> analysisRules = new HashMap<>();
@@ -65,7 +66,7 @@ public enum PhaseEnum {
         analysisRules.put(SceneEnum.SOCIAL, 2);
         analysisRules.put(SceneEnum.STUDY, 1);
         analysisRules.put(SceneEnum.HEALTH, 1);
-        PHASE_SCENE_RULES.put(ANALYSIS, analysisRules);
+        STANDARD_SUBJECT_SCENE_RULES.put(ANALYSIS, analysisRules);
 
         // 决策选择阶段规则
         Map<SceneEnum, Integer> decisionRules = new HashMap<>();
@@ -74,7 +75,7 @@ public enum PhaseEnum {
         decisionRules.put(SceneEnum.SOCIAL, 1);
         decisionRules.put(SceneEnum.STUDY, 1);
         decisionRules.put(SceneEnum.HEALTH, 1);
-        PHASE_SCENE_RULES.put(DECISION, decisionRules);
+        STANDARD_SUBJECT_SCENE_RULES.put(DECISION, decisionRules);
 
         // 行动执行阶段规则
         Map<SceneEnum, Integer> actionRules = new HashMap<>();
@@ -83,7 +84,7 @@ public enum PhaseEnum {
         actionRules.put(SceneEnum.SOCIAL, 2);
         actionRules.put(SceneEnum.STUDY, 1);
         actionRules.put(SceneEnum.HEALTH, 1);
-        PHASE_SCENE_RULES.put(ACTION, actionRules);
+        STANDARD_SUBJECT_SCENE_RULES.put(ACTION, actionRules);
 
         // 复盘感知阶段规则
         Map<SceneEnum, Integer> reviewerRules = new HashMap<>();
@@ -92,7 +93,7 @@ public enum PhaseEnum {
         reviewerRules.put(SceneEnum.SOCIAL, 2);
         reviewerRules.put(SceneEnum.STUDY, 1);
         reviewerRules.put(SceneEnum.HEALTH, 1);
-        PHASE_SCENE_RULES.put(REVIEW, reviewerRules);
+        STANDARD_SUBJECT_SCENE_RULES.put(REVIEW, reviewerRules);
 
     }
 

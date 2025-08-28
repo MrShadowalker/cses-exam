@@ -5,15 +5,17 @@ import lombok.Getter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 测试目标枚举
+ */
 @Getter
 public enum TargetTypeEnum {
 
-    TYB("tyb", "体验版", "认知能力模型测评体验版"),
-    BZB("bzb", "标准版", "认知能力模型测评标准版"),
-    CY("cy", "是否适合创业", "给出明确结论，并提供合理的分析及原由"),
-    GG("gg", "是否具备高管潜力", "给出明确结论，并提供合理的分析及原由"),
-    QSN("qsn", "青少年版", "面向青少年"),
-    ET("et", "儿童版", "面向儿童"),
+    ADULT("adult", "成人向", "认知能力模型测评成人版"),
+    TEENAGER("teenager", "青少年向", "面向青少年"),
+    CHILD("child", "儿童向", "面向儿童"),
+    ENTREPRENEURSHIP("entrepreneurship", "是否适合创业", "给出明确结论，并提供合理的分析及原由"),
+    EXECUTIVE("executive", "是否具备高管潜力", "给出明确结论，并提供合理的分析及原由"),
     ;
 
     String code;

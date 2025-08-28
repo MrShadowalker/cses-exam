@@ -43,6 +43,7 @@ public class QuestionController extends BaseApiController {
             vm.setScore(ExamUtil.scoreToVM(q.getScore()));
             TextContent textContent = textContentService.selectById(q.getInfoTextContentId());
             QuestionObject questionObject = JsonUtil.toJsonObject(textContent.getContent(), QuestionObject.class);
+            assert questionObject != null;
             String clearHtml = HtmlUtil.clear(questionObject.getTitleContent());
             vm.setShortTitle(clearHtml);
             return vm;

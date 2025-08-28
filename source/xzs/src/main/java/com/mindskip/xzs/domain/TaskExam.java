@@ -18,7 +18,12 @@ public class TaskExam implements Serializable {
     private String title;
 
     /**
-     * 年级
+     * 科目
+     */
+    private Integer subjectId;
+
+    /**
+     * 等级
      */
     private Integer gradeLevel;
 
@@ -50,6 +55,10 @@ public class TaskExam implements Serializable {
 
     public void setTitle(String title) {
         this.title = title == null ? null : title.trim();
+    }
+
+    public void setSubjectId(Integer subjectId) {
+        this.subjectId = subjectId;
     }
 
     public void setGradeLevel(Integer gradeLevel) {

@@ -1,34 +1,40 @@
 <template>
   <div class="app-container">
-    <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
-      <el-form-item label="等级：" prop="gradeLevel" required>
-        <el-select v-model="form.gradeLevel"   placeholder="等级"  @change="levelChange">
-          <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
+    <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading"  :rules="rules">
+      <el-form-item label="目标类型：" prop="targetType" required>
+        <el-select v-model="form.targetType" placeholder="目标类型">
+          <el-option v-for="item in targetTypeEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="科目：" prop="subjectId" required>
-        <el-select v-model="form.subjectId" placeholder="科目" >
-          <el-option v-for="item in subjectFilter" :key="item.id" :value="item.id" :label="item.name+' ( '+item.levelName+' )'"></el-option>
+      <el-form-item label="场景类型：" prop="scene" required>
+        <el-select v-model="form.scene" placeholder="场景类型">
+          <el-option v-for="item in sceneEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
-      </el-form-item>
-      <el-form-item label="题干：" prop="title" required>
-        <el-input v-model="form.title"   @focus="inputClick(form,'title')" />
-      </el-form-item>
-      <el-form-item label="答案：" prop="correct" required>
-        <el-input v-model="form.correct"   @focus="inputClick(form,'correct')" />
-      </el-form-item>
-      <el-form-item label="解析：" prop="analyze" required>
-        <el-input v-model="form.analyze"  @focus="inputClick(form,'analyze')" />
-      </el-form-item>
-      <el-form-item label="分数：" prop="score" required>
-        <el-input-number v-model="form.score" :precision="1" :step="1" :max="100"></el-input-number>
       </el-form-item>
       <el-form-item label="难度：" required>
         <el-rate v-model="form.difficult" class="question-item-rate"></el-rate>
       </el-form-item>
+      <el-form-item label="算分权重：" prop="weight" required>
+        <el-input-number v-model="form.weight" placeholder="算分权重" :precision="2" :step="0.01" :max="1.00"></el-input-number>
+      </el-form-item>
+      <el-form-item label="题干：" prop="title" required>
+        <el-input v-model="form.title"   @focus="inputClick(form,'title')" />
+      </el-form-item>
+      <el-form-item label="选项：" required>
+        <el-form-item :label="item.prefix" :key="item.prefix"  v-for="(item,index) in form.items"  label-width="50px" class="question-item-label">
+          <el-input v-model="item.prefix"  style="width:50px;" />
+          <el-input v-model="item.content"   @focus="inputClick(item,'content')"  class="question-item-content-input"/>
+          <el-input-number v-model="item.score" :min="0" :step="1" style="width: 80px; margin-left: 10px;" />
+          <el-button type="danger" size="mini" class="question-item-remove" icon="el-icon-delete" @click="questionItemRemove(index)"></el-button>
+        </el-form-item>
+      </el-form-item>
+      <el-form-item label="解析：" prop="analyze" >
+        <el-input v-model="form.analyze"  @focus="inputClick(form,'analyze')" />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm">提交</el-button>
         <el-button @click="resetForm">重置</el-button>
+        <el-button type="success" @click="questionItemAdd">添加选项</el-button>
         <el-button type="success" @click="showQuestion">预览</el-button>
       </el-form-item>
     </el-form>
@@ -59,37 +65,30 @@ export default {
     return {
       form: {
         id: null,
-        questionType: 5,
-        gradeLevel: null,
-        subjectId: null,
+        questionType: 6,
+        targetType: null,
+        scene: null,
+        weight: null,
         title: '',
-        items: [],
+        items: [
+          { id: null, prefix: 'A', content: '', level:1, score: 1 },
+          { id: null, prefix: 'B', content: '', level:2, score: 2 },
+          { id: null, prefix: 'C', content: '', level:3, score: 3 },
+          { id: null, prefix: 'D', content: '', level:4, score: 4 },
+          { id: null, prefix: 'E', content: '', level:5, score: 5 },
+        ],
         analyze: '',
-        correct: '',
-        score: '',
         difficult: 0
       },
       subjectFilter: null,
       formLoading: false,
       rules: {
-        gradeLevel: [
-          { required: true, message: '请选择等级', trigger: 'change' }
-        ],
-        subjectId: [
-          { required: true, message: '请选择科目', trigger: 'change' }
-        ],
         title: [
           { required: true, message: '请输入题干', trigger: 'blur' }
         ],
-        correct: [
-          { required: true, message: '请输入答案', trigger: 'blur' }
-        ],
-        analyze: [
-          { required: true, message: '请输入解析', trigger: 'blur' }
-        ],
         score: [
           { required: true, message: '请输入分数', trigger: 'blur' }
-        ]
+        ],
       },
       richEditor: {
         dialogVisible: false,
@@ -137,6 +136,20 @@ export default {
       this.richEditor.object[this.richEditor.parameterName] = content
       this.richEditor.dialogVisible = false
     },
+    questionItemRemove (index) {
+      this.form.items.splice(index, 1)
+    },
+    questionItemAdd () {
+      let items = this.form.items
+      let newLastPrefix
+      if (items.length > 0) {
+        let last = items[items.length - 1]
+        newLastPrefix = String.fromCharCode(last.prefix.charCodeAt() + 1)
+      } else {
+        newLastPrefix = 'A'
+      }
+      items.push({ id: null, prefix: newLastPrefix, content: '' })
+    },
     submitForm () {
       let _this = this
       this.$refs.form.validate((valid) => {
@@ -160,31 +173,31 @@ export default {
         }
       })
     },
+    showQuestion () {
+      this.questionShow.dialog = true
+      this.questionShow.qType = this.form.questionType
+      this.questionShow.question = this.form
+    },
     resetForm () {
       let lastId = this.form.id
       this.$refs['form'].resetFields()
       this.form = {
         id: null,
-        questionType: 5,
-        gradeLevel: null,
-        subjectId: null,
+        questionType: 6,
+        targetType: null,
+        weight: null,
         title: '',
-        items: [],
+        items: [
+          { id: null, prefix: 'A', content: '', score: 1 },
+          { id: null, prefix: 'B', content: '', score: 2 },
+          { id: null, prefix: 'C', content: '', score: 3 },
+          { id: null, prefix: 'D', content: '', score: 4 },
+          { id: null, prefix: 'E', content: '', score: 5 },
+        ],
         analyze: '',
-        correct: '',
-        score: '',
         difficult: 0
       }
       this.form.id = lastId
-    },
-    levelChange () {
-      this.form.subjectId = null
-      this.subjectFilter = this.subjects.filter(data => data.level === this.form.gradeLevel)
-    },
-    showQuestion () {
-      this.questionShow.dialog = true
-      this.questionShow.qType = this.form.questionType
-      this.questionShow.question = this.form
     },
     ...mapActions('exam', { initSubject: 'initSubject' }),
     ...mapActions('tagsView', { delCurrentView: 'delCurrentView' })
@@ -193,7 +206,8 @@ export default {
     ...mapGetters('enumItem', ['enumFormat']),
     ...mapState('enumItem', {
       questionTypeEnum: state => state.exam.question.typeEnum,
-      levelEnum: state => state.user.levelEnum
+      targetTypeEnum: state => state.exam.question.targetTypeEnum,
+      sceneEnum: state => state.exam.question.sceneEnum,
     }),
     ...mapState('exam', { subjects: state => state.subjects })
   }

@@ -16,7 +16,7 @@
 
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column prop="id" label="Id" />
-      <el-table-column prop="name" label="学科"/>
+      <el-table-column prop="name" label="科目"/>
       <el-table-column prop="levelName" label="等级" />
       <el-table-column width="220px" label="操作" align="center">
         <template slot-scope="{row}">

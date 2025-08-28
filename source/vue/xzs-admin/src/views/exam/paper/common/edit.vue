@@ -1,9 +1,15 @@
 <template>
   <div class="app-container">
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
-      <el-form-item label="目标类型：" prop="targetType" required>
-        <el-select v-model="form.targetType" placeholder="目标类型">
-          <el-option v-for="item in targetTypeEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
+      <el-form-item label="等级：" prop="level" required>
+        <el-select v-model="form.level" placeholder="等级"  @change="levelChange">
+          <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="科目：" prop="subjectId" required>
+        <el-select v-model="form.subjectId" placeholder="科目">
+          <el-option v-for="item in subjectFilter" :key="item.id" :value="item.id"
+                     :label="item.name+' ( '+item.levelName+' )'"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="试卷类型：" prop="paperType" required>
@@ -84,7 +90,7 @@
 <script>
 
 import { mapGetters, mapState, mapActions } from 'vuex'
-import Pagination from '@/components/Pagination/index.vue'
+import Pagination from '@/components/Pagination'
 import QuestionShow from '../question/components/Show'
 import examPaperApi from '@/api/examPaper'
 import questionApi from '@/api/question'
@@ -254,8 +260,7 @@ export default {
     ...mapState('enumItem', {
       questionTypeEnum: state => state.exam.question.typeEnum,
       paperTypeEnum: state => state.exam.examPaper.paperTypeEnum,
-      levelEnum: state => state.user.levelEnum,
-      targetTypeEnum: state => state.user.targetTypeEnum
+      levelEnum: state => state.user.levelEnum
     }),
     ...mapState('exam', { subjects: state => state.subjects })
   }

@@ -1,6 +1,9 @@
 package com.mindskip.xzs.viewmodel.admin.exam;
 
 
+import com.mindskip.xzs.domain.enums.ExamPaperTypeEnum;
+import com.mindskip.xzs.domain.enums.ExamPaperVersionEnum;
+import lombok.Data;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -9,96 +12,46 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 
+@Data
 public class ExamPaperEditRequestVM {
+
     private Integer id;
-    @NotNull
-    private Integer level;
-    @NotNull
-    private Integer subjectId;
-    @NotNull
-    private Integer paperType;
+
     @NotBlank
     private String name;
+
+    /**
+     * @see ExamPaperTypeEnum#getCode()
+     */
     @NotNull
-    private Integer suggestTime;
+    private Integer paperType;
 
-    private List<String> limitDateTime;
+    /**
+     * 试卷版本
+     *
+     * @see ExamPaperVersionEnum#getCode()
+     */
+    private String paperVersion;
 
-    @Size(min = 1,message = "请添加试卷标题")
+    @Size(min = 1, message = "请添加试卷标题")
     @Valid
     private List<ExamPaperTitleItemVM> titleItems;
 
     private String score;
 
-    public Integer getId() {
-        return id;
-    }
+    @Deprecated
+    // @NotNull
+    private Integer level;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @Deprecated
+    // @NotNull
+    private Integer subjectId;
 
-    public Integer getLevel() {
-        return level;
-    }
+    @Deprecated
+    // @NotNull
+    private Integer suggestTime;
 
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
+    @Deprecated
+    private List<String> limitDateTime;
 
-    public Integer getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(Integer subjectId) {
-        this.subjectId = subjectId;
-    }
-
-    public Integer getPaperType() {
-        return paperType;
-    }
-
-    public void setPaperType(Integer paperType) {
-        this.paperType = paperType;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getSuggestTime() {
-        return suggestTime;
-    }
-
-    public void setSuggestTime(Integer suggestTime) {
-        this.suggestTime = suggestTime;
-    }
-
-    public List<String> getLimitDateTime() {
-        return limitDateTime;
-    }
-
-    public void setLimitDateTime(List<String> limitDateTime) {
-        this.limitDateTime = limitDateTime;
-    }
-
-    public List<ExamPaperTitleItemVM> getTitleItems() {
-        return titleItems;
-    }
-
-    public void setTitleItems(List<ExamPaperTitleItemVM> titleItems) {
-        this.titleItems = titleItems;
-    }
-
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
 }

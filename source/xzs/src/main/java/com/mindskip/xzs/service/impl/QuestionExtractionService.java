@@ -20,7 +20,7 @@ public class QuestionExtractionService {
 //    /**
 //     * 根据阶段抽取题目
 //     */
-//    public List<Question> extractQuestionsByPhase(PhaseEnum phase) {
+//    public List<Question> extractQuestionsByPhase(SubjectEnum phase) {
 //        // 1. 验证规则
 //        ruleManager.validateRules();
 //

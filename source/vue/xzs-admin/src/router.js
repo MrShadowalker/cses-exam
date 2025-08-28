@@ -116,6 +116,13 @@ const constantRoutes = [
         hidden: true
       },
       {
+        path: 'question/edit/complexChoice',
+        component: () => import('@/views/exam/question/edit/complex-choice'),
+        name: 'complexChoicePage',
+        meta: { title: '复合题编辑', noCache: true, activeMenu: '/exam/question/list' },
+        hidden: true
+      },
+      {
         path: 'question/edit/trueFalse',
         component: () => import('@/views/exam/question/edit/true-false'),
         name: 'trueFalsePage',
@@ -176,13 +183,13 @@ const constantRoutes = [
         path: 'subject/list',
         component: () => import('@/views/education/subject/list'),
         name: 'EducationSubjectPage',
-        meta: { title: '学科列表', noCache: true }
+        meta: { title: '科目列表', noCache: true }
       },
       {
         path: 'subject/edit',
         component: () => import('@/views/education/subject/edit'),
         name: 'EducationSubjectEditPage',
-        meta: { title: '学科编辑', noCache: true, activeMenu: '/education/subject/list' },
+        meta: { title: '科目编辑', noCache: true, activeMenu: '/education/subject/list' },
         hidden: true
       }
     ]

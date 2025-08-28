@@ -5,6 +5,7 @@ package com.mindskip.xzs.domain.question;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -25,5 +26,17 @@ public class QuestionObject {
 
     // 对于某些类型的题目，是有正确选项的
     private String correct;
+
+    // 题目类型
+    private Integer questionType;
+
+    // 题目目标类型
+    private String questionTargetType;
+
+    // 题目场景
+    private String questionScene;
+
+    // 题目权重
+    private BigDecimal weight;
 
 }

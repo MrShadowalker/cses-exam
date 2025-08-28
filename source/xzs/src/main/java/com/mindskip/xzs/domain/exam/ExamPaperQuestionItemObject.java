@@ -1,12 +1,9 @@
 package com.mindskip.xzs.domain.exam;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Setter
-@Getter
+@Data
 public class ExamPaperQuestionItemObject {
     private Integer id;
     private Integer itemOrder;
-
 }

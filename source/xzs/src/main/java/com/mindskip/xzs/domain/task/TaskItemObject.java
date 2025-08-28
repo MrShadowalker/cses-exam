@@ -1,14 +1,11 @@
 package com.mindskip.xzs.domain.task;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Setter
-@Getter
+@Data
 public class TaskItemObject {
     private Integer examPaperId;
     private String examPaperName;
     private Integer itemOrder;
-
 }

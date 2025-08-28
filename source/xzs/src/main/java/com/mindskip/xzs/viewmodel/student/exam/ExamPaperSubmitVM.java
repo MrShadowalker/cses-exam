@@ -1,11 +1,14 @@
 package com.mindskip.xzs.viewmodel.student.exam;
 
 
+import lombok.Data;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
+@Data
 public class ExamPaperSubmitVM {
 
     @NotNull
@@ -20,35 +23,4 @@ public class ExamPaperSubmitVM {
     @Valid
     private List<ExamPaperSubmitItemVM> answerItems;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getDoTime() {
-        return doTime;
-    }
-
-    public void setDoTime(Integer doTime) {
-        this.doTime = doTime;
-    }
-
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
-
-    public List<ExamPaperSubmitItemVM> getAnswerItems() {
-        return answerItems;
-    }
-
-    public void setAnswerItems(List<ExamPaperSubmitItemVM> answerItems) {
-        this.answerItems = answerItems;
-    }
 }

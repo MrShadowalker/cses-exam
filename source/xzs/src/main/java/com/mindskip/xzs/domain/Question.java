@@ -1,15 +1,18 @@
 package com.mindskip.xzs.domain;
 
 import com.mindskip.xzs.domain.enums.QuestionTypeEnum;
+import com.mindskip.xzs.domain.enums.SceneEnum;
+import com.mindskip.xzs.domain.enums.SubjectEnum;
+import com.mindskip.xzs.domain.enums.TargetTypeEnum;
 import com.mindskip.xzs.utility.ExamUtil;
-import lombok.Getter;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-@Getter
+@Data
 public class Question implements Serializable {
 
     private static final long serialVersionUID = 8826266720383164363L;
@@ -22,22 +25,31 @@ public class Question implements Serializable {
     private Integer questionType;
 
     /**
-     * 学科
+     * 服务对象
+     * @see TargetTypeEnum#getCode()
+     */
+    private String questionTargetType;
+
+    /**
+     * 场景
+     * @see SceneEnum#getCode()
+     */
+    private String questionScene;
+
+    /**
+     * 科目，即对应的环节
+     * @see SubjectEnum#getCode()
      */
     private Integer subjectId;
 
     /**
-     * 题目总分(千分制)
-     */
-    private BigDecimal score;
-
-    /**
-     * 算分权重
+     * 题目算分权重
      */
     private BigDecimal weight;
 
     /**
      * 级别
+     * 复合选择题中没有等级这个属性
      */
     private Integer gradeLevel;
 
@@ -50,6 +62,11 @@ public class Question implements Serializable {
      * 正确答案
      */
     private String correct;
+
+    /**
+     * 题目分数
+     */
+    private BigDecimal score;
 
     /**
      * 题目 填空、 题干、解析、答案等信息
@@ -79,6 +96,14 @@ public class Question implements Serializable {
 
     public void setQuestionType(Integer questionType) {
         this.questionType = questionType;
+    }
+
+    public void setQuestionTargetType(String questionTargetType) {
+        this.questionTargetType = questionTargetType;
+    }
+
+    public void setQuestionScene(String questionScene) {
+        this.questionScene = questionScene;
     }
 
     public void setSubjectId(Integer subjectId) {
