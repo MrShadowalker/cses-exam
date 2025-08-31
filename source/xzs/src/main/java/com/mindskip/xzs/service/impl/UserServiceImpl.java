@@ -1,12 +1,12 @@
 package com.mindskip.xzs.service.impl;
 
-import com.mindskip.xzs.domain.other.KeyValue;
+import com.mindskip.xzs.domain.dto.common.KeyValue;
 import com.mindskip.xzs.exception.BusinessException;
-import com.mindskip.xzs.domain.User;
+import com.mindskip.xzs.domain.entity.User;
 import com.mindskip.xzs.event.OnRegistrationCompleteEvent;
 import com.mindskip.xzs.repository.UserMapper;
 import com.mindskip.xzs.service.UserService;
-import com.mindskip.xzs.viewmodel.admin.user.UserPageRequestVM;
+import com.mindskip.xzs.domain.viewmodel.admin.user.UserPageRequestVM;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;

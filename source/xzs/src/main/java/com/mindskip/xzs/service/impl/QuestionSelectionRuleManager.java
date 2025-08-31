@@ -13,8 +13,8 @@ public class QuestionSelectionRuleManager {
     /**
      * 根据阶段获取抽题规则
      */
-    public Map<SceneEnum, Integer> getRulesByPhase(SubjectEnum phase) {
-        return SubjectEnum.STANDARD_SUBJECT_SCENE_RULES.get(phase);
+    public Map<SceneEnum, Integer> getRulesBySubject(SubjectEnum subject) {
+        return SubjectEnum.STANDARD_SUBJECT_SCENE_RULES.get(subject);
     }
 
     /**
@@ -38,8 +38,8 @@ public class QuestionSelectionRuleManager {
     /**
      * 计算阶段总题数
      */
-    public int calculateTotalQuestions(SubjectEnum phase) {
-        Map<SceneEnum, Integer> rules = getRulesByPhase(phase);
+    public int calculateTotalQuestions(SubjectEnum subject) {
+        Map<SceneEnum, Integer> rules = getRulesBySubject(subject);
         if (rules == null) return 0;
         return rules.values().stream().mapToInt(Integer::intValue).sum();
     }

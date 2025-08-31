@@ -1,6 +1,6 @@
 package com.mindskip.xzs.service.impl;
 
-import com.mindskip.xzs.domain.enums.ExamPaperVersionEnum;
+import com.mindskip.xzs.domain.enums.VersionEnum;
 import com.mindskip.xzs.domain.enums.TargetTypeEnum;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,12 +13,12 @@ public class QuestionSelectionStrategy {
      * <p>
      * 在试卷生成服务中使用
      * QuestionSelectionStrategy strategy = new QuestionSelectionStrategy();
-     * List<TargetTypeEnum> targetTypes = strategy.getTargetTypesByPaperVersion(ExamPaperVersionEnum.BZB);
+     * List<TargetTypeEnum> targetTypes = strategy.getTargetTypesByPaperVersion(VersionEnum.BZB);
      * 然后根据targetTypes从数据库查询对应题目
      */
-    public List<TargetTypeEnum> getTargetTypesByPaperVersion(ExamPaperVersionEnum paperType) {
+    public List<TargetTypeEnum> getTargetTypesByPaperVersion(VersionEnum version) {
         List<TargetTypeEnum> targetTypes = new ArrayList<>();
-        switch (paperType) {
+        switch (version) {
             case EXPERIENCE:
                 targetTypes.add(TargetTypeEnum.ADULT);
                 break;
@@ -32,7 +32,7 @@ public class QuestionSelectionStrategy {
                 targetTypes.add(TargetTypeEnum.CHILD);
                 break;
             default:
-                throw new IllegalArgumentException("不支持的试卷类型: " + paperType);
+                throw new IllegalArgumentException("不支持的试卷类型: " + version);
         }
         return targetTypes;
     }

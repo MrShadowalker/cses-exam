@@ -2,10 +2,10 @@ package com.mindskip.xzs.controller.wx.student;
 
 import com.mindskip.xzs.base.RestResponse;
 import com.mindskip.xzs.controller.wx.BaseWXApiController;
-import com.mindskip.xzs.domain.Message;
-import com.mindskip.xzs.domain.MessageUser;
-import com.mindskip.xzs.domain.User;
-import com.mindskip.xzs.domain.UserEventLog;
+import com.mindskip.xzs.domain.entity.Message;
+import com.mindskip.xzs.domain.entity.MessageUser;
+import com.mindskip.xzs.domain.entity.User;
+import com.mindskip.xzs.domain.entity.UserEventLog;
 import com.mindskip.xzs.domain.enums.RoleEnum;
 import com.mindskip.xzs.domain.enums.UserStatusEnum;
 import com.mindskip.xzs.event.UserEvent;
@@ -15,7 +15,7 @@ import com.mindskip.xzs.service.UserEventLogService;
 import com.mindskip.xzs.service.UserService;
 import com.mindskip.xzs.utility.DateTimeUtil;
 import com.mindskip.xzs.utility.PageInfoHelper;
-import com.mindskip.xzs.viewmodel.student.user.*;
+import com.mindskip.xzs.domain.viewmodel.student.user.*;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,15 +51,15 @@ public class UserController extends BaseWXApiController {
     }
 
     @RequestMapping(value = "/current", method = RequestMethod.POST)
-    public RestResponse<UserResponseVM> current() {
+    public RestResponse<UserResponseViewModel> current() {
         User user = getCurrentUser();
-        UserResponseVM userVm = UserResponseVM.from(user);
+        UserResponseViewModel userVm = UserResponseViewModel.from(user);
         userVm.setBirthDay(DateTimeUtil.dateShortFormat(user.getBirthDay()));
         return RestResponse.ok(userVm);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public RestResponse register(@Valid UserRegisterVM model) {
+    public RestResponse register(@Valid UserRegisterViewModel model) {
         User existUser = userService.getUserByUserName(model.getUserName());
         if (null != existUser) {
             return new RestResponse<>(2, "用户已存在");
@@ -81,7 +81,7 @@ public class UserController extends BaseWXApiController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public RestResponse<UserResponseVM> update(@Valid UserUpdateVM model) {
+    public RestResponse<UserResponseViewModel> update(@Valid UserUpdateViewModel model) {
         if (StringUtils.isBlank(model.getBirthDay())) {
             model.setBirthDay(null);
         }
@@ -92,30 +92,30 @@ public class UserController extends BaseWXApiController {
         UserEventLog userEventLog = new UserEventLog(user.getId(), user.getUserName(), user.getRealName(), new Date());
         userEventLog.setContent(user.getUserName() + " 更新了个人资料");
         eventPublisher.publishEvent(new UserEvent(userEventLog));
-        UserResponseVM userVm = UserResponseVM.from(user);
+        UserResponseViewModel userVm = UserResponseViewModel.from(user);
         return RestResponse.ok(userVm);
     }
 
     @RequestMapping(value = "/log", method = RequestMethod.POST)
-    public RestResponse<List<UserEventLogVM>> log() {
+    public RestResponse<List<UserEventLogViewModel>> log() {
         User user = getCurrentUser();
         List<UserEventLog> userEventLogs = userEventLogService.getUserEventLogByUserId(user.getId());
-        List<UserEventLogVM> userEventLogVMS = userEventLogs.stream().map(d -> {
-            UserEventLogVM vm = modelMapper.map(d, UserEventLogVM.class);
+        List<UserEventLogViewModel> userEventLogViewModels = userEventLogs.stream().map(d -> {
+            UserEventLogViewModel vm = modelMapper.map(d, UserEventLogViewModel.class);
             vm.setCreateTime(DateTimeUtil.dateFormat(d.getCreateTime()));
             return vm;
         }).collect(Collectors.toList());
-        return RestResponse.ok(userEventLogVMS);
+        return RestResponse.ok(userEventLogViewModels);
     }
 
     @RequestMapping(value = "/message/page", method = RequestMethod.POST)
-    public RestResponse<PageInfo<MessageResponseVM>> messagePageList(MessageRequestVM messageRequestVM) {
-        messageRequestVM.setReceiveUserId(getCurrentUser().getId());
-        PageInfo<MessageUser> messageUserPageInfo = messageService.studentPage(messageRequestVM);
+    public RestResponse<PageInfo<MessageResponseViewModel>> messagePageList(MessageRequestViewModel messageRequestViewModelVM) {
+        messageRequestViewModelVM.setReceiveUserId(getCurrentUser().getId());
+        PageInfo<MessageUser> messageUserPageInfo = messageService.studentPage(messageRequestViewModelVM);
         List<Integer> ids = messageUserPageInfo.getList().stream().map(d -> d.getMessageId()).collect(Collectors.toList());
         List<Message> messages = ids.size() != 0 ? messageService.selectMessageByIds(ids) : null;
-        PageInfo<MessageResponseVM> page = PageInfoHelper.copyMap(messageUserPageInfo, e -> {
-            MessageResponseVM vm = modelMapper.map(e, MessageResponseVM.class);
+        PageInfo<MessageResponseViewModel> page = PageInfoHelper.copyMap(messageUserPageInfo, e -> {
+            MessageResponseViewModel vm = modelMapper.map(e, MessageResponseViewModel.class);
             messages.stream().filter(d -> e.getMessageId().equals(d.getId())).findFirst().ifPresent(message -> {
                 vm.setTitle(message.getTitle());
                 vm.setContent(message.getContent());

@@ -1,8 +1,8 @@
 package com.mindskip.xzs.configuration.spring.security;
 
 import com.mindskip.xzs.base.SystemCode;
-import com.mindskip.xzs.domain.User;
-import com.mindskip.xzs.domain.UserEventLog;
+import com.mindskip.xzs.domain.entity.User;
+import com.mindskip.xzs.domain.entity.UserEventLog;
 import com.mindskip.xzs.event.UserEvent;
 import com.mindskip.xzs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

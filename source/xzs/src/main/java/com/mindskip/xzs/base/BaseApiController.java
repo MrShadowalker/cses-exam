@@ -2,7 +2,7 @@ package com.mindskip.xzs.base;
 
 
 import com.mindskip.xzs.context.WebContext;
-import com.mindskip.xzs.domain.User;
+import com.mindskip.xzs.domain.entity.User;
 import com.mindskip.xzs.utility.ModelMapperSingle;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -13,11 +13,11 @@ import java.util.Map;
 @Getter
 public enum QuestionTypeEnum {
 
-    SingleChoice(1, "单选题"),
-    MultipleChoice(2, "多选题"),
-    TrueFalse(3, "判断题"),
-    GapFilling(4, "填空题"),
-    ShortAnswer(5, "简答题"),
+//    SingleChoice(1, "单选题"),
+//    MultipleChoice(2, "多选题"),
+//    TrueFalse(3, "判断题"),
+//    GapFilling(4, "填空题"),
+//    ShortAnswer(5, "简答题"),
     ComplexChoice(6, "复合选择题"),
     ;
 
@@ -45,9 +45,9 @@ public enum QuestionTypeEnum {
     public static boolean needSaveTextContent(Integer code) {
         QuestionTypeEnum questionTypeEnum = QuestionTypeEnum.fromCode(code);
         switch (questionTypeEnum) {
-            case GapFilling:
-            case ShortAnswer:
-                return true;
+//            case GapFilling:
+//            case ShortAnswer:
+//                return true;
             default:
                 return false;
         }

@@ -1,6 +1,6 @@
 package com.mindskip.xzs.service;
 
-import com.mindskip.xzs.domain.User;
+import com.mindskip.xzs.domain.entity.User;
 
 
 public interface AuthenticationService {
@@ -13,8 +13,6 @@ public interface AuthenticationService {
      * @return boolean
      */
     boolean authUser(String username, String password);
-
-
 
     /**
      * authUser

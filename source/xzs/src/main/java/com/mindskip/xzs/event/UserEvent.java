@@ -1,6 +1,6 @@
 package com.mindskip.xzs.event;
 
-import com.mindskip.xzs.domain.UserEventLog;
+import com.mindskip.xzs.domain.entity.UserEventLog;
 import org.springframework.context.ApplicationEvent;
 
 /**

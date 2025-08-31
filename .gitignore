@@ -9,7 +9,7 @@
 .project 
 .classpath
 
-# idea  ignore
+# idea ignore
 .idea/
 *.ipr
 *.iml
@@ -24,8 +24,11 @@ logs/
 *.patch
 *.tmp
 
-# system  ignore
+# system ignore
 .DS_Store
 Thumbs.db
 
 *.class
+
+# plugins ignore
+/.trae/

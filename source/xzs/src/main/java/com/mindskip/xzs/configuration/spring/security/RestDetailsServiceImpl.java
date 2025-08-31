@@ -38,7 +38,7 @@ public class RestDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        com.mindskip.xzs.domain.User user = userService.getUserByUserName(username);
+        com.mindskip.xzs.domain.entity.User user = userService.getUserByUserName(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("Username  not found.");

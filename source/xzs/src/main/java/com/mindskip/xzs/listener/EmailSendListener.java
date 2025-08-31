@@ -1,6 +1,6 @@
 package com.mindskip.xzs.listener;
 
-import com.mindskip.xzs.domain.User;
+import com.mindskip.xzs.domain.entity.User;
 import com.mindskip.xzs.event.OnRegistrationCompleteEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.lang.NonNull;

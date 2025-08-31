@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mindskip.xzs.repository.UserMapper">
-  <resultMap id="BaseResultMap" type="com.mindskip.xzs.domain.User">
+  <resultMap id="BaseResultMap" type="com.mindskip.xzs.domain.entity.User">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_uuid" jdbcType="VARCHAR" property="userUuid" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
@@ -35,7 +35,7 @@
     delete from t_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.mindskip.xzs.domain.User" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insert" parameterType="com.mindskip.xzs.domain.entity.User" useGeneratedKeys="true" keyProperty="id">
     insert into t_user (id, user_uuid, user_name,
       password, real_name, age,
       sex, birth_day, user_level,
@@ -51,7 +51,7 @@
       #{lastActiveTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{wxOpenId,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.mindskip.xzs.domain.User" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.mindskip.xzs.domain.entity.User" useGeneratedKeys="true" keyProperty="id">
     insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -166,7 +166,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mindskip.xzs.domain.User">
+  <update id="updateByPrimaryKeySelective" parameterType="com.mindskip.xzs.domain.entity.User">
     update t_user
     <set>
       <if test="userUuid != null">
@@ -223,7 +223,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mindskip.xzs.domain.User">
+  <update id="updateByPrimaryKey" parameterType="com.mindskip.xzs.domain.entity.User">
     update t_user
     set user_uuid = #{userUuid,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
@@ -261,10 +261,12 @@
   </select>
 
   <select id="getUserByUserName" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from t_user
-    where deleted=0  and user_name=#{value} limit 1
+      select
+      <include refid="Base_Column_List"/>
+      from t_user
+      where user_name=#{value}
+      and deleted=0
+      limit 1
   </select>
 
   <select id="getUserByUserNamePwd" resultMap="BaseResultMap">
@@ -311,7 +313,7 @@
   </select>
 
 
-  <select id="userPage" resultMap="BaseResultMap" parameterType="com.mindskip.xzs.viewmodel.admin.user.UserPageRequestVM">
+  <select id="userPage" resultMap="BaseResultMap" parameterType="com.mindskip.xzs.domain.viewmodel.admin.user.UserPageRequestVM">
     SELECT
     <include refid="Base_Column_List"/>
     FROM t_user
@@ -328,7 +330,7 @@
 
 
 
-  <insert id="insertUser" parameterType="com.mindskip.xzs.domain.User"
+  <insert id="insertUser" parameterType="com.mindskip.xzs.domain.entity.User"
           useGeneratedKeys="true" keyProperty="id">
 		insert into t_user
 		(user_uuid,user_name,password,real_name,age, last_active_time)
@@ -349,7 +351,7 @@
   </insert>
 
 
-  <update id="updateUser" parameterType="com.mindskip.xzs.domain.User">
+  <update id="updateUser" parameterType="com.mindskip.xzs.domain.entity.User">
     update t_user
     <set>
       <if test="realName != null">real_name = #{realName},</if>
@@ -382,7 +384,7 @@
   </select>
 
 
-  <select id="selectByUserName"  resultType="com.mindskip.xzs.domain.other.KeyValue">
+  <select id="selectByUserName"  resultType="com.mindskip.xzs.domain.dto.common.KeyValue">
 		SELECT  id as value,user_name as name
 		from t_user
 		where deleted=0  and user_name like concat('%',#{value},'%')

@@ -1,6 +1,6 @@
 package com.mindskip.xzs.service.impl;
 
-import com.mindskip.xzs.domain.TextContent;
+import com.mindskip.xzs.domain.entity.TextContent;
 import com.mindskip.xzs.repository.TextContentMapper;
 import com.mindskip.xzs.service.TextContentService;
 import com.mindskip.xzs.utility.JsonUtil;

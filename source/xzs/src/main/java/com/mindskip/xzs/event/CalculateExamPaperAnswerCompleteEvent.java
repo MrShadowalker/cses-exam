@@ -1,6 +1,6 @@
 package com.mindskip.xzs.event;
 
-import com.mindskip.xzs.domain.ExamPaperAnswerInfo;
+import com.mindskip.xzs.domain.entity.ExamPaperQuestionAnswer;
 import org.springframework.context.ApplicationEvent;
 
 /**
@@ -12,17 +12,17 @@ import org.springframework.context.ApplicationEvent;
 public class CalculateExamPaperAnswerCompleteEvent extends ApplicationEvent {
 
 
-    private final ExamPaperAnswerInfo examPaperAnswerInfo;
+    private final ExamPaperQuestionAnswer examPaperQuestionAnswer;
 
 
     /**
      * Instantiates a new Calculate exam paper answer complete event.
      *
-     * @param examPaperAnswerInfo the exam paper answer info
+     * @param examPaperQuestionAnswer the exam paper answer info
      */
-    public CalculateExamPaperAnswerCompleteEvent(final ExamPaperAnswerInfo examPaperAnswerInfo) {
-        super(examPaperAnswerInfo);
-        this.examPaperAnswerInfo = examPaperAnswerInfo;
+    public CalculateExamPaperAnswerCompleteEvent(final ExamPaperQuestionAnswer examPaperQuestionAnswer) {
+        super(examPaperQuestionAnswer);
+        this.examPaperQuestionAnswer = examPaperQuestionAnswer;
     }
 
     /**
@@ -30,8 +30,8 @@ public class CalculateExamPaperAnswerCompleteEvent extends ApplicationEvent {
      *
      * @return the exam paper answer info
      */
-    public ExamPaperAnswerInfo getExamPaperAnswerInfo() {
-        return examPaperAnswerInfo;
+    public ExamPaperQuestionAnswer getExamPaperAnswerInfo() {
+        return examPaperQuestionAnswer;
     }
 
 }

@@ -1,11 +1,11 @@
 package com.mindskip.xzs.service.impl;
 
-import com.mindskip.xzs.domain.UserEventLog;
-import com.mindskip.xzs.domain.other.KeyValue;
+import com.mindskip.xzs.domain.entity.UserEventLog;
+import com.mindskip.xzs.domain.dto.common.KeyValue;
 import com.mindskip.xzs.repository.UserEventLogMapper;
 import com.mindskip.xzs.service.UserEventLogService;
 import com.mindskip.xzs.utility.DateTimeUtil;
-import com.mindskip.xzs.viewmodel.admin.user.UserEventPageRequestVM;
+import com.mindskip.xzs.domain.viewmodel.admin.user.UserEventPageRequestVM;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +40,12 @@ public class UserEventLogServiceImpl extends BaseServiceImpl<UserEventLog> imple
 
 
     @Override
-    public List<Integer> selectMothCount() {
+    public List<Integer> selectMonthCount() {
         Date startTime = DateTimeUtil.getMonthStartDay();
         Date endTime = DateTimeUtil.getMonthEndDay();
         List<KeyValue> mouthCount = userEventLogMapper.selectCountByDate(startTime, endTime);
-        List<String> mothStartToNowFormat = DateTimeUtil.MothStartToNowFormat();
-        return mothStartToNowFormat.stream().map(md -> {
+        List<String> monthStartToNowFormat = DateTimeUtil.MonthStartToNowFormat();
+        return monthStartToNowFormat.stream().map(md -> {
             KeyValue keyValue = mouthCount.stream().filter(kv -> kv.getName().equals(md)).findAny().orElse(null);
             return null == keyValue ? 0 : keyValue.getValue();
         }).collect(Collectors.toList());

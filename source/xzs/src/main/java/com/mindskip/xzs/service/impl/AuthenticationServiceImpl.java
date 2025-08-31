@@ -1,7 +1,7 @@
 package com.mindskip.xzs.service.impl;
 
 import com.mindskip.xzs.configuration.property.SystemConfig;
-import com.mindskip.xzs.domain.User;
+import com.mindskip.xzs.domain.entity.User;
 import com.mindskip.xzs.service.AuthenticationService;
 import com.mindskip.xzs.service.UserService;
 import com.mindskip.xzs.utility.RsaUtil;

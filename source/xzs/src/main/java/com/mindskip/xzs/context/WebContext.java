@@ -1,6 +1,6 @@
 package com.mindskip.xzs.context;
 
-import com.mindskip.xzs.domain.User;
+import com.mindskip.xzs.domain.entity.User;
 import com.mindskip.xzs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,6 +1,6 @@
 package com.mindskip.xzs.repository;
 
-import com.mindskip.xzs.domain.UserToken;
+import com.mindskip.xzs.domain.entity.UserToken;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

@@ -1,8 +1,8 @@
 package com.mindskip.xzs.repository;
 
-import com.mindskip.xzs.domain.UserEventLog;
-import com.mindskip.xzs.domain.other.KeyValue;
-import com.mindskip.xzs.viewmodel.admin.user.UserEventPageRequestVM;
+import com.mindskip.xzs.domain.entity.UserEventLog;
+import com.mindskip.xzs.domain.dto.common.KeyValue;
+import com.mindskip.xzs.domain.viewmodel.admin.user.UserEventPageRequestVM;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

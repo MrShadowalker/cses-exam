@@ -1,8 +1,8 @@
 package com.mindskip.xzs.service.impl;
 
 import com.mindskip.xzs.configuration.property.SystemConfig;
-import com.mindskip.xzs.domain.User;
-import com.mindskip.xzs.domain.UserToken;
+import com.mindskip.xzs.domain.entity.User;
+import com.mindskip.xzs.domain.entity.UserToken;
 import com.mindskip.xzs.repository.UserTokenMapper;
 import com.mindskip.xzs.service.UserService;
 import com.mindskip.xzs.service.UserTokenService;

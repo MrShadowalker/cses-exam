@@ -1,7 +1,7 @@
 package com.mindskip.xzs.repository;
 
-import com.mindskip.xzs.domain.MessageUser;
-import com.mindskip.xzs.viewmodel.student.user.MessageRequestVM;
+import com.mindskip.xzs.domain.entity.MessageUser;
+import com.mindskip.xzs.domain.viewmodel.student.user.MessageRequestViewModel;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public interface MessageUserMapper extends BaseMapper<MessageUser> {
 
     int inserts(List<MessageUser> list);
 
-    List<MessageUser> studentPage(MessageRequestVM requestVM);
+    List<MessageUser> studentPage(MessageRequestViewModel requestVM);
 
     Integer unReadCount(Integer userId);
 }

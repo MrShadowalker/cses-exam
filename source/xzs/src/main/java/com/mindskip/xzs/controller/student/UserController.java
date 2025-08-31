@@ -1,13 +1,16 @@
 package com.mindskip.xzs.controller.student;
 
+import com.github.pagehelper.PageInfo;
 import com.mindskip.xzs.base.BaseApiController;
 import com.mindskip.xzs.base.RestResponse;
-import com.mindskip.xzs.domain.Message;
-import com.mindskip.xzs.domain.MessageUser;
-import com.mindskip.xzs.domain.User;
-import com.mindskip.xzs.domain.UserEventLog;
+import com.mindskip.xzs.controller.wx.BaseWXApiController;
+import com.mindskip.xzs.domain.entity.Message;
+import com.mindskip.xzs.domain.entity.MessageUser;
+import com.mindskip.xzs.domain.entity.User;
+import com.mindskip.xzs.domain.entity.UserEventLog;
 import com.mindskip.xzs.domain.enums.RoleEnum;
 import com.mindskip.xzs.domain.enums.UserStatusEnum;
+import com.mindskip.xzs.domain.viewmodel.student.user.*;
 import com.mindskip.xzs.event.UserEvent;
 import com.mindskip.xzs.service.AuthenticationService;
 import com.mindskip.xzs.service.MessageService;
@@ -15,11 +18,10 @@ import com.mindskip.xzs.service.UserEventLogService;
 import com.mindskip.xzs.service.UserService;
 import com.mindskip.xzs.utility.DateTimeUtil;
 import com.mindskip.xzs.utility.PageInfoHelper;
-import com.mindskip.xzs.viewmodel.student.user.*;
-import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 
 @RestController("StudentUserController")
 @RequestMapping(value = "/api/student/user")
@@ -48,15 +51,15 @@ public class UserController extends BaseApiController {
     }
 
     @RequestMapping(value = "/current", method = RequestMethod.POST)
-    public RestResponse<UserResponseVM> current() {
+    public RestResponse<UserResponseViewModel> current() {
         User user = getCurrentUser();
-        UserResponseVM userVm = UserResponseVM.from(user);
+        UserResponseViewModel userVm = UserResponseViewModel.from(user);
         return RestResponse.ok(userVm);
     }
 
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public RestResponse register(@RequestBody @Valid UserRegisterVM model) {
+    public RestResponse register(@RequestBody @Valid UserRegisterViewModel model) {
         User existUser = userService.getUserByUserName(model.getUserName());
         if (null != existUser) {
             return new RestResponse<>(2, "用户已存在");
@@ -79,7 +82,7 @@ public class UserController extends BaseApiController {
 
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public RestResponse update(@RequestBody @Valid UserUpdateVM model) {
+    public RestResponse update(@RequestBody @Valid UserUpdateViewModel model) {
         if (StringUtils.isBlank(model.getBirthDay())) {
             model.setBirthDay(null);
         }
@@ -94,11 +97,11 @@ public class UserController extends BaseApiController {
     }
 
     @RequestMapping(value = "/log", method = RequestMethod.POST)
-    public RestResponse<List<UserEventLogVM>> log() {
+    public RestResponse<List<UserEventLogViewModel>> log() {
         User user = getCurrentUser();
         List<UserEventLog> userEventLogs = userEventLogService.getUserEventLogByUserId(user.getId());
-        List<UserEventLogVM> userEventLogVMS = userEventLogs.stream().map(d -> {
-            UserEventLogVM vm = modelMapper.map(d, UserEventLogVM.class);
+        List<UserEventLogViewModel> userEventLogVMS = userEventLogs.stream().map(d -> {
+            UserEventLogViewModel vm = modelMapper.map(d, UserEventLogViewModel.class);
             vm.setCreateTime(DateTimeUtil.dateFormat(d.getCreateTime()));
             return vm;
         }).collect(Collectors.toList());
@@ -106,13 +109,13 @@ public class UserController extends BaseApiController {
     }
 
     @RequestMapping(value = "/message/page", method = RequestMethod.POST)
-    public RestResponse<PageInfo<MessageResponseVM>> messagePageList(@RequestBody MessageRequestVM messageRequestVM) {
+    public RestResponse<PageInfo<MessageResponseViewModel>> messagePageList(@RequestBody MessageRequestViewModel messageRequestVM) {
         messageRequestVM.setReceiveUserId(getCurrentUser().getId());
         PageInfo<MessageUser> messageUserPageInfo = messageService.studentPage(messageRequestVM);
         List<Integer> ids = messageUserPageInfo.getList().stream().map(d -> d.getMessageId()).collect(Collectors.toList());
         List<Message> messages = ids.size() != 0 ? messageService.selectMessageByIds(ids) : null;
-        PageInfo<MessageResponseVM> page = PageInfoHelper.copyMap(messageUserPageInfo, e -> {
-            MessageResponseVM vm = modelMapper.map(e, MessageResponseVM.class);
+        PageInfo<MessageResponseViewModel> page = PageInfoHelper.copyMap(messageUserPageInfo, e -> {
+            MessageResponseViewModel vm = modelMapper.map(e, MessageResponseViewModel.class);
             messages.stream().filter(d -> e.getMessageId().equals(d.getId())).findFirst().ifPresent(message -> {
                 vm.setTitle(message.getTitle());
                 vm.setContent(message.getContent());

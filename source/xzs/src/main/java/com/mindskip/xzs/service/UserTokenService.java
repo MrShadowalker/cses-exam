@@ -1,7 +1,7 @@
 package com.mindskip.xzs.service;
 
-import com.mindskip.xzs.domain.User;
-import com.mindskip.xzs.domain.UserToken;
+import com.mindskip.xzs.domain.entity.User;
+import com.mindskip.xzs.domain.entity.UserToken;
 
 public interface UserTokenService extends BaseService<UserToken> {
 

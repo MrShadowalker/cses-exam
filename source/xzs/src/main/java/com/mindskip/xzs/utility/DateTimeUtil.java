@@ -119,7 +119,7 @@ public class DateTimeUtil {
      *
      * @return the list
      */
-    public static List<String> MothStartToNowFormat() {
+    public static List<String> MonthStartToNowFormat() {
         Date startTime = getMonthStartDay();
         Calendar nowCalendar = Calendar.getInstance();
         nowCalendar.setTime(new Date());

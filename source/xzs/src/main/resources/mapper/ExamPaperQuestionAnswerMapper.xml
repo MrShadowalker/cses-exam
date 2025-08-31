@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mindskip.xzs.repository.ExamPaperQuestionAnswerMapper">
+    <resultMap id="BaseResultMap" type="com.mindskip.xzs.domain.entity.ExamPaperQuestionAnswer">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="exam_paper_id" jdbcType="INTEGER" property="examPaperId"/>
+        <result column="question_id" jdbcType="INTEGER" property="questionId"/>
+        <result column="selected_option_ids" jdbcType="VARCHAR" property="selectedOptionIds"/>
+        <result column="normal_option_id" jdbcType="INTEGER" property="normalOptionId"/>
+        <result column="max_score" jdbcType="INTEGER" property="maxScore"/>
+        <result column="normal_score" jdbcType="INTEGER" property="normalScore"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, exam_paper_id, question_id, selected_option_ids, normal_option_id, max_score, normal_score, create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_exam_paper_question_answer
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from t_exam_paper_question_answer
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.mindskip.xzs.domain.entity.ExamPaperQuestionAnswer" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into t_exam_paper_question_answer (id, exam_paper_id, question_id,
+                                                  selected_option_ids, normal_option_id,
+                                                  max_score, normal_score,
+                                                  create_time)
+        values (#{id,jdbcType=INTEGER}, #{examPaperId,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER},
+                #{selectedOptionIds,jdbcType=VARCHAR}, #{normalOptionId,jdbcType=INTEGER},
+                #{maxScore,jdbcType=INTEGER}, #{normalScore,jdbcType=INTEGER},
+                #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.mindskip.xzs.domain.entity.ExamPaperQuestionAnswer"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into t_exam_paper_question_answer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="examPaperId != null">
+                exam_paper_id,
+            </if>
+            <if test="questionId != null">
+                question_id,
+            </if>
+            <if test="selectedOptionIds != null">
+                selected_option_ids,
+            </if>
+            <if test="normalOptionId != null">
+                normal_option_id,
+            </if>
+            <if test="maxScore != null">
+                max_score,
+            </if>
+            <if test="normalScore != null">
+                normal_score,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="examPaperId != null">
+                #{examPaperId,jdbcType=INTEGER},
+            </if>
+            <if test="questionId != null">
+                #{questionId,jdbcType=INTEGER},
+            </if>
+            <if test="selectedOptionIds != null">
+                #{selectedOptionIds,jdbcType=VARCHAR},
+            </if>
+            <if test="normalOptionId != null">
+                #{normalOptionId,jdbcType=INTEGER},
+            </if>
+            <if test="maxScore != null">
+                #{maxScore,jdbcType=INTEGER},
+            </if>
+            <if test="normalScore != null">
+                #{normalScore,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mindskip.xzs.domain.entity.ExamPaperQuestionAnswer">
+        update t_exam_paper_question_answer
+        <set>
+            <if test="examPaperId != null">
+                exam_paper_id = #{examPaperId,jdbcType=INTEGER},
+            </if>
+            <if test="questionId != null">
+                question_id = #{questionId,jdbcType=INTEGER},
+            </if>
+            <if test="selectedOptionIds != null">
+                selected_option_ids = #{selectedOptionIds,jdbcType=VARCHAR},
+            </if>
+            <if test="normalOptionId != null">
+                normal_option_id = #{normalOptionId,jdbcType=INTEGER},
+            </if>
+            <if test="maxScore != null">
+                max_score = #{maxScore,jdbcType=INTEGER},
+            </if>
+            <if test="normalScore != null">
+                normal_score = #{normalScore,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mindskip.xzs.domain.entity.ExamPaperQuestionAnswer">
+        update t_exam_paper_question_answer
+        set exam_paper_id       = #{examPaperId,jdbcType=INTEGER},
+            question_id         = #{questionId,jdbcType=INTEGER},
+            selected_option_ids = #{selectedOptionIds,jdbcType=VARCHAR},
+            normal_option_id    = #{normalOptionId,jdbcType=INTEGER},
+            max_score           = #{maxScore,jdbcType=DECIMAL},
+            max_score_int       = #{maxScoreInt,jdbcType=INTEGER},
+            normal_score        = #{normalScore,jdbcType=DECIMAL},
+            normal_score_int    = #{normalScoreInt,jdbcType=INTEGER},
+            create_time         = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByPaperId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_exam_paper_question_answer
+        where exam_paper_id = #{examPaperId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByQuestionId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_exam_paper_question_answer
+        where question_id = #{questionId,jdbcType=INTEGER}
+    </select>
+
+</mapper>

@@ -2,15 +2,15 @@ package com.mindskip.xzs.controller.admin;
 
 import com.mindskip.xzs.base.BaseApiController;
 import com.mindskip.xzs.base.RestResponse;
-import com.mindskip.xzs.domain.other.KeyValue;
-import com.mindskip.xzs.domain.User;
-import com.mindskip.xzs.domain.UserEventLog;
+import com.mindskip.xzs.domain.dto.common.KeyValue;
+import com.mindskip.xzs.domain.entity.User;
+import com.mindskip.xzs.domain.entity.UserEventLog;
 import com.mindskip.xzs.domain.enums.UserStatusEnum;
 import com.mindskip.xzs.service.AuthenticationService;
 import com.mindskip.xzs.service.UserEventLogService;
 import com.mindskip.xzs.service.UserService;
 import com.mindskip.xzs.utility.DateTimeUtil;
-import com.mindskip.xzs.viewmodel.admin.user.*;
+import com.mindskip.xzs.domain.viewmodel.admin.user.*;
 import com.mindskip.xzs.utility.PageInfoHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -41,9 +41,9 @@ public class UserController extends BaseApiController {
 
 
     @RequestMapping(value = "/page/list", method = RequestMethod.POST)
-    public RestResponse<PageInfo<UserResponseVM>> pageList(@RequestBody UserPageRequestVM model) {
+    public RestResponse<PageInfo<UserResponseViewModel>> pageList(@RequestBody UserPageRequestVM model) {
         PageInfo<User> pageInfo = userService.userPage(model);
-        PageInfo<UserResponseVM> page = PageInfoHelper.copyMap(pageInfo, d -> UserResponseVM.from(d));
+        PageInfo<UserResponseViewModel> page = PageInfoHelper.copyMap(pageInfo, d -> UserResponseViewModel.from(d));
         return RestResponse.ok(page);
     }
 
@@ -60,16 +60,16 @@ public class UserController extends BaseApiController {
     }
 
     @RequestMapping(value = "/select/{id}", method = RequestMethod.POST)
-    public RestResponse<UserResponseVM> select(@PathVariable Integer id) {
+    public RestResponse<UserResponseViewModel> select(@PathVariable Integer id) {
         User user = userService.getUserById(id);
-        UserResponseVM userVm = UserResponseVM.from(user);
+        UserResponseViewModel userVm = UserResponseViewModel.from(user);
         return RestResponse.ok(userVm);
     }
 
     @RequestMapping(value = "/current", method = RequestMethod.POST)
-    public RestResponse<UserResponseVM> current() {
+    public RestResponse<UserResponseViewModel> current() {
         User user = getCurrentUser();
-        UserResponseVM userVm = UserResponseVM.from(user);
+        UserResponseViewModel userVm = UserResponseViewModel.from(user);
         return RestResponse.ok(userVm);
     }
 //

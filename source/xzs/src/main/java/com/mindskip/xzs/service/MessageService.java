@@ -1,9 +1,9 @@
 package com.mindskip.xzs.service;
 
-import com.mindskip.xzs.domain.Message;
-import com.mindskip.xzs.domain.MessageUser;
-import com.mindskip.xzs.viewmodel.admin.message.MessagePageRequestVM;
-import com.mindskip.xzs.viewmodel.student.user.MessageRequestVM;
+import com.mindskip.xzs.domain.entity.Message;
+import com.mindskip.xzs.domain.entity.MessageUser;
+import com.mindskip.xzs.domain.viewmodel.admin.message.MessagePageRequestVM;
+import com.mindskip.xzs.domain.viewmodel.student.user.MessageRequestViewModel;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public interface MessageService {
 
     List<Message> selectMessageByIds(List<Integer> ids);
 
-    PageInfo<MessageUser> studentPage(MessageRequestVM requestVM);
+    PageInfo<MessageUser> studentPage(MessageRequestViewModel requestVM);
 
     PageInfo<Message> page(MessagePageRequestVM requestVM);
 

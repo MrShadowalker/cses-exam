@@ -1,6 +1,7 @@
 package com.mindskip.xzs.service;
 
-import com.mindskip.xzs.domain.TextContent;
+
+import com.mindskip.xzs.domain.entity.TextContent;
 
 import java.util.Date;
 import java.util.List;

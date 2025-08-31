@@ -45,6 +45,59 @@ public enum SubjectEnum {
     }
 
     // 新增标准版试卷环节场景数量常量定义
+    public static final Map<SubjectEnum, Map<SceneEnum, Integer>> EXPERIENCE_SUBJECT_SCENE_RULES;
+
+    static {
+        EXPERIENCE_SUBJECT_SCENE_RULES = new HashMap<>();
+
+        // 信息获取阶段规则
+        Map<SceneEnum, Integer> infoRules = new HashMap<>();
+        infoRules.put(SceneEnum.LIFE, 1);
+        infoRules.put(SceneEnum.WORK, 1);
+        infoRules.put(SceneEnum.SOCIAL, 1);
+        infoRules.put(SceneEnum.STUDY, 1);
+        infoRules.put(SceneEnum.HEALTH, 1);
+        EXPERIENCE_SUBJECT_SCENE_RULES.put(INFORMATION, infoRules);
+
+        // 分析处理阶段规则
+        Map<SceneEnum, Integer> analysisRules = new HashMap<>();
+        analysisRules.put(SceneEnum.LIFE, 1);
+        analysisRules.put(SceneEnum.WORK, 1);
+        analysisRules.put(SceneEnum.SOCIAL, 1);
+        analysisRules.put(SceneEnum.STUDY, 1);
+        analysisRules.put(SceneEnum.HEALTH, 1);
+        EXPERIENCE_SUBJECT_SCENE_RULES.put(ANALYSIS, analysisRules);
+
+        // 决策选择阶段规则
+        Map<SceneEnum, Integer> decisionRules = new HashMap<>();
+        decisionRules.put(SceneEnum.LIFE, 1);
+        decisionRules.put(SceneEnum.WORK, 1);
+        decisionRules.put(SceneEnum.SOCIAL, 1);
+        decisionRules.put(SceneEnum.STUDY, 1);
+        decisionRules.put(SceneEnum.HEALTH, 1);
+        EXPERIENCE_SUBJECT_SCENE_RULES.put(DECISION, decisionRules);
+
+        // 行动执行阶段规则
+        Map<SceneEnum, Integer> actionRules = new HashMap<>();
+        actionRules.put(SceneEnum.LIFE, 1);
+        actionRules.put(SceneEnum.WORK, 1);
+        actionRules.put(SceneEnum.SOCIAL, 1);
+        actionRules.put(SceneEnum.STUDY, 1);
+        actionRules.put(SceneEnum.HEALTH, 1);
+        EXPERIENCE_SUBJECT_SCENE_RULES.put(ACTION, actionRules);
+
+        // 复盘感知阶段规则
+        Map<SceneEnum, Integer> reviewerRules = new HashMap<>();
+        reviewerRules.put(SceneEnum.LIFE, 1);
+        reviewerRules.put(SceneEnum.WORK, 1);
+        reviewerRules.put(SceneEnum.SOCIAL, 1);
+        reviewerRules.put(SceneEnum.STUDY, 1);
+        reviewerRules.put(SceneEnum.HEALTH, 1);
+        EXPERIENCE_SUBJECT_SCENE_RULES.put(REVIEW, reviewerRules);
+
+    }
+
+    // 新增标准版试卷环节场景数量常量定义
     public static final Map<SubjectEnum, Map<SceneEnum, Integer>> STANDARD_SUBJECT_SCENE_RULES;
 
     static {

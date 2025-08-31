@@ -1,8 +1,8 @@
 package com.mindskip.xzs.repository;
 
-import com.mindskip.xzs.domain.other.KeyValue;
-import com.mindskip.xzs.domain.Question;
-import com.mindskip.xzs.viewmodel.admin.question.QuestionPageRequestVM;
+import com.mindskip.xzs.domain.dto.common.KeyValue;
+import com.mindskip.xzs.domain.entity.Question;
+import com.mindskip.xzs.domain.viewmodel.admin.question.QuestionPageRequestVM;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,5 +18,4 @@ public interface QuestionMapper extends BaseMapper<Question> {
 
     Integer selectAllCount();
 
-    List<KeyValue> selectCountByDate(@Param("startTime") Date startTime,@Param("endTime") Date endTime);
 }

@@ -1,12 +1,12 @@
 package com.mindskip.xzs.service.impl;
 
-import com.mindskip.xzs.domain.Message;
-import com.mindskip.xzs.domain.MessageUser;
+import com.mindskip.xzs.domain.entity.Message;
+import com.mindskip.xzs.domain.entity.MessageUser;
 import com.mindskip.xzs.repository.MessageMapper;
 import com.mindskip.xzs.repository.MessageUserMapper;
 import com.mindskip.xzs.service.MessageService;
-import com.mindskip.xzs.viewmodel.admin.message.MessagePageRequestVM;
-import com.mindskip.xzs.viewmodel.student.user.MessageRequestVM;
+import com.mindskip.xzs.domain.viewmodel.admin.message.MessagePageRequestVM;
+import com.mindskip.xzs.domain.viewmodel.student.user.MessageRequestViewModel;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public PageInfo<MessageUser> studentPage(MessageRequestVM requestVM) {
+    public PageInfo<MessageUser> studentPage(MessageRequestViewModel requestVM) {
         return PageHelper.startPage(requestVM.getPageIndex(), requestVM.getPageSize(), "id desc").doSelectPageInfo(() ->
                 messageUserMapper.studentPage(requestVM)
         );

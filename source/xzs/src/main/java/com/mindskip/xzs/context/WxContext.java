@@ -1,7 +1,7 @@
 package com.mindskip.xzs.context;
 
-import com.mindskip.xzs.domain.User;
-import com.mindskip.xzs.domain.UserToken;
+import com.mindskip.xzs.domain.entity.User;
+import com.mindskip.xzs.domain.entity.UserToken;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
