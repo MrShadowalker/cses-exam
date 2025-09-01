@@ -10,9 +10,11 @@ import com.mindskip.xzs.domain.dto.question.QuestionAnswerDTO;
 import com.mindskip.xzs.domain.dto.question.QuestionAnswerSubmitDTO;
 import com.mindskip.xzs.domain.dto.question.QuestionDTO;
 import com.mindskip.xzs.domain.dto.report.ExamPaperReportDTO;
+import com.mindskip.xzs.domain.dto.request.ExamPaperReportRequest;
 import com.mindskip.xzs.domain.entity.ExamPaper;
 import com.mindskip.xzs.domain.entity.ExamPaperQuestionAnswer;
 import com.mindskip.xzs.domain.entity.QuestionOption;
+import com.mindskip.xzs.domain.viewmodel.student.exam.report.ExamPaperReportViewModel;
 import com.mindskip.xzs.repository.*;
 import com.mindskip.xzs.service.ExamPaperAnswerService;
 import com.mindskip.xzs.service.TextContentService;
@@ -62,7 +64,8 @@ public class ExamPaperAnswerServiceImpl extends BaseServiceImpl<ExamPaperQuestio
         // 4. 生成考试报告
         ExamPaperReportDTO examPaperReportDTO = generateExamPaperReport(examPaperScoreDTO);
 
-
+        // 5. 保存考试报告
+        saveExamPaperReport(examPaperReportDTO);
     }
 
     private void saveExamPaperAnswer(ExamPaperAnswerSubmitDTO dto) {
@@ -273,6 +276,15 @@ public class ExamPaperAnswerServiceImpl extends BaseServiceImpl<ExamPaperQuestio
     }
 
     private ExamPaperReportDTO generateExamPaperReport(ExamPaperScoreDTO examPaperScoreDTO) {
+        return null;
+    }
+
+    private void saveExamPaperReport(ExamPaperReportDTO examPaperReportDTO) {
+
+    }
+
+    @Override
+    public ExamPaperReportViewModel getExamPaperReport(ExamPaperReportRequest report) {
         return null;
     }
 

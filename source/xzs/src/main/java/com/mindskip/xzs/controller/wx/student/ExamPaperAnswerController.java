@@ -3,7 +3,9 @@ package com.mindskip.xzs.controller.wx.student;
 import com.mindskip.xzs.base.RestResponse;
 import com.mindskip.xzs.controller.wx.BaseWXApiController;
 import com.mindskip.xzs.domain.dto.exam.ExamPaperAnswerSubmitDTO;
+import com.mindskip.xzs.domain.dto.request.ExamPaperReportRequest;
 import com.mindskip.xzs.domain.viewmodel.student.exam.answer.ExamPaperAnswerSubmitViewModel;
+import com.mindskip.xzs.domain.viewmodel.student.exam.report.ExamPaperReportViewModel;
 import com.mindskip.xzs.service.ExamPaperAnswerService;
 import com.mindskip.xzs.service.ExamPaperService;
 import org.springframework.beans.BeanUtils;
@@ -39,6 +41,11 @@ public class ExamPaperAnswerController extends BaseWXApiController {
             return RestResponse.fail(500, "试卷提交失败");
         }
         return RestResponse.ok();
+    }
+
+    @PostMapping(value = "/report")
+    public RestResponse<ExamPaperReportViewModel> report(@RequestBody ExamPaperReportRequest report) {
+        return null;
     }
 
 

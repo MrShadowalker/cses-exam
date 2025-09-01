@@ -3,7 +3,11 @@ package com.mindskip.xzs.controller.student;
 import com.mindskip.xzs.base.BaseApiController;
 import com.mindskip.xzs.base.RestResponse;
 import com.mindskip.xzs.domain.dto.exam.ExamPaperAnswerSubmitDTO;
+import com.mindskip.xzs.domain.dto.report.ExamPaperReportDTO;
+import com.mindskip.xzs.domain.dto.request.ExamPaperReportRequest;
+import com.mindskip.xzs.domain.entity.ExamPaper;
 import com.mindskip.xzs.domain.viewmodel.student.exam.answer.ExamPaperAnswerSubmitViewModel;
+import com.mindskip.xzs.domain.viewmodel.student.exam.report.ExamPaperReportViewModel;
 import com.mindskip.xzs.service.ExamPaperAnswerService;
 import com.mindskip.xzs.service.ExamPaperService;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +41,12 @@ public class ExamPaperAnswerController extends BaseApiController {
             return RestResponse.fail(500, "试卷提交失败");
         }
         return RestResponse.ok();
+    }
+
+    @PostMapping(value = "/report")
+    public RestResponse<ExamPaperReportViewModel> report(@RequestBody ExamPaperReportRequest report) {
+        ExamPaperReportViewModel examPaperReportDTO = examPaperAnswerService.getExamPaperReport(report);
+        return RestResponse.ok(examPaperReportDTO);
     }
 
 
