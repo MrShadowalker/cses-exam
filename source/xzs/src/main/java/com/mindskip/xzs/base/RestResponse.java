@@ -42,7 +42,7 @@ public class RestResponse<T> {
      * @param msg  the msg
      * @return the rest response
      */
-    public static RestResponse fail(Integer code, String msg) {
+    public static <T> RestResponse<T> fail(Integer code, String msg) {
         return new RestResponse<>(code, msg);
     }
 

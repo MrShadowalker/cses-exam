@@ -235,5 +235,18 @@ CREATE TABLE `t_user_event_log`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
 
+   -- 用户表添加分享相关字段
+   ALTER TABLE `t_user` ADD COLUMN `invite_user_id` int NULL COMMENT '邀请人用户ID';
+   
+ -- 创建分享关系表
+   CREATE TABLE `t_user_share_relation` (
+     `id` int NOT NULL AUTO_INCREMENT,
+     `share_user_id` int NOT NULL COMMENT '分享者用户ID',
+     `shared_user_id` int NOT NULL COMMENT '被分享者用户ID',
+     `shared_user_type` varchar(10) NULL COMMENT '被分享者是否新用户',
+     `share_scene` varchar(50) NULL COMMENT '分享场景',
+     `create_time` datetime NULL COMMENT '创建时间',
+     PRIMARY KEY (`id`)
+   );
 
 SET FOREIGN_KEY_CHECKS = 1;

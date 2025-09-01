@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mindskip.xzs.repository.UserShareRelationMapper">
+
+    <resultMap id="BaseResultMap" type="com.mindskip.xzs.domain.entity.UserShareRelation">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="share_user_id" jdbcType="INTEGER" property="shareUserId" />
+        <result column="shared_user_id" jdbcType="INTEGER" property="sharedUserId" />
+        <result column="shared_user_type" jdbcType="VARCHAR" property="sharedUserType" />
+        <result column="share_scene" jdbcType="VARCHAR" property="shareScene" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, share_user_id, shared_user_id, shared_user_type, share_scene, create_time
+    </sql>
+
+    <insert id="insert" parameterType="com.mindskip.xzs.domain.entity.UserShareRelation" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_user_share_relation (share_user_id, shared_user_id, shared_user_type, share_scene, create_time)
+        VALUES (#{shareUserId,jdbcType=INTEGER}, #{sharedUserId,jdbcType=INTEGER}, 
+                #{sharedUserType,jdbcType=VARCHAR}, #{shareScene,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM t_user_share_relation
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByShareUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM t_user_share_relation
+        WHERE share_user_id = #{shareUserId,jdbcType=INTEGER}
+        ORDER BY create_time DESC
+    </select>
+
+    <select id="selectBySharedUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM t_user_share_relation
+        WHERE shared_user_id = #{sharedUserId,jdbcType=INTEGER}
+        LIMIT 1
+    </select>
+
+    <select id="countByShareUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM t_user_share_relation
+        WHERE share_user_id = #{shareUserId,jdbcType=INTEGER}
+    </select>
+
+    <select id="countNewUserByShareUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM t_user_share_relation
+        WHERE share_user_id = #{shareUserId,jdbcType=INTEGER}
+        AND shared_user_type = 'new_user'
+    </select>
+
+    <select id="countOldUserByShareUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM t_user_share_relation
+        WHERE share_user_id = #{shareUserId,jdbcType=INTEGER}
+        AND shared_user_type = 'old_user'
+    </select>
+
+</mapper>

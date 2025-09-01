@@ -45,4 +45,14 @@ public class WxAuthLoginInfo {
      * 微信用户所在城市
      */
     private String city;
+
+    /**
+     * 分享者用户ID（通过分享链接进入时传入）
+     */
+    private Integer shareUserId;
+
+    /**
+     * 分享场景（如：群聊、好友等）
+     */
+    private String shareScene;
 }

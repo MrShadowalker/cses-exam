@@ -8,6 +8,7 @@ import com.mindskip.xzs.domain.enums.UserStatusEnum;
 import com.mindskip.xzs.service.AuthenticationService;
 import com.mindskip.xzs.service.UserService;
 import com.mindskip.xzs.service.UserTokenService;
+import com.mindskip.xzs.service.UserShareRelationService;
 import com.mindskip.xzs.utility.WxUtil;
 import com.mindskip.xzs.utility.WxResponse;
 import com.mindskip.xzs.domain.viewmodel.wx.student.user.BindInfo;
@@ -30,13 +31,15 @@ public class AuthController extends BaseWXApiController {
     private final AuthenticationService authenticationService;
     private final UserService userService;
     private final UserTokenService userTokenService;
+    private final UserShareRelationService userShareRelationService;
 
     @Autowired
-    public AuthController(SystemConfig systemConfig, AuthenticationService authenticationService, UserService userService, UserTokenService userTokenService) {
+    public AuthController(SystemConfig systemConfig, AuthenticationService authenticationService, UserService userService, UserTokenService userTokenService, UserShareRelationService userShareRelationService) {
         this.systemConfig = systemConfig;
         this.authenticationService = authenticationService;
         this.userService = userService;
         this.userTokenService = userTokenService;
+        this.userShareRelationService = userShareRelationService;
     }
 
     @RequestMapping(value = "/bind", method = RequestMethod.POST)
@@ -106,6 +109,8 @@ public class AuthController extends BaseWXApiController {
         User existingUser = userService.selectByWxOpenId(openid);
         
         User user;
+        boolean isNewUser = false;
+        
         if (existingUser != null) {
             // 用户已存在，检查用户状态
             UserStatusEnum userStatusEnum = UserStatusEnum.fromCode(existingUser.getStatus());
@@ -122,9 +127,13 @@ public class AuthController extends BaseWXApiController {
             user = existingUser;
         } else {
             // 用户不存在，自动注册
+            isNewUser = true;
             user = createUserFromWxInfo(openid, model);
             userService.insertUser(user);
         }
+
+        // 处理分享关系
+        handleShareRelation(user, model, isNewUser);
 
         // 3. 生成token并返回
         UserToken userToken = userTokenService.bind(user);
@@ -193,6 +202,11 @@ public class AuthController extends BaseWXApiController {
             user.setImagePath(model.getAvatarUrl().trim());
         }
         
+        // 设置邀请人用户ID（首次分享会存入，如果邀请连接此时是空的，那么分享关系则是新用户）
+        if (model.getShareUserId() != null && model.getShareUserId() > 0) {
+            user.setInviteUserId(model.getShareUserId());
+        }
+        
         // 默认设置
         user.setRole(1); // 1.学生
         user.setStatus(1); // 1.启用
@@ -206,5 +220,47 @@ public class AuthController extends BaseWXApiController {
         user.setLastActiveTime(now);
         
         return user;
+    }
+
+    /**
+     * 处理分享关系
+     * 首次分享会存入，如果邀请连接此时是空的，那么分享关系则是新用户，如果已有邀请人则不覆盖且分享关系是老用户
+     */
+    private void handleShareRelation(User user, WxAuthLoginInfo model, boolean isNewUser) {
+        // 如果没有分享者用户ID，则不处理分享关系
+        if (model.getShareUserId() == null || model.getShareUserId() <= 0) {
+            return;
+        }
+
+        try {
+            // 检查被分享者是否已有分享关系记录
+            boolean hasExistingRelation = userShareRelationService.getShareRelationBySharedUserId(user.getId()) != null;
+            
+            if (!hasExistingRelation) {
+                // 没有分享关系记录，创建新的分享关系
+                String shareScene = model.getShareScene() != null ? model.getShareScene() : "unknown";
+                
+                // 判断用户类型：如果用户的邀请人ID为空，则为新用户；否则为老用户
+                boolean isNewUserForShare = user.getInviteUserId() == null;
+                
+                userShareRelationService.createShareRelation(
+                    model.getShareUserId(),
+                    user.getId(),
+                    shareScene,
+                    isNewUserForShare
+                );
+                
+                // 如果是新用户且当前邀请人ID为空，则更新用户的邀请人ID
+                if (isNewUser && user.getInviteUserId() == null) {
+                    user.setInviteUserId(model.getShareUserId());
+                    user.setModifyTime(new java.util.Date());
+                    userService.updateUser(user);
+                }
+            }
+        } catch (Exception e) {
+            // 分享关系处理失败不影响用户登录，记录日志即可
+            // 这里可以添加日志记录
+            System.err.println("处理分享关系失败: " + e.getMessage());
+        }
     }
 }

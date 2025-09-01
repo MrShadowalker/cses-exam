@@ -78,6 +78,11 @@ public class User implements Serializable {
      */
     private String wxOpenId;
 
+    /**
+     * 邀请人用户ID
+     */
+    private Integer inviteUserId;
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -148,5 +153,9 @@ public class User implements Serializable {
 
     public void setWxOpenId(String wxOpenId) {
         this.wxOpenId = wxOpenId == null ? null : wxOpenId.trim();
+    }
+
+    public void setInviteUserId(Integer inviteUserId) {
+        this.inviteUserId = inviteUserId;
     }
 }
