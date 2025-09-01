@@ -14,6 +14,9 @@ public class WxResponse implements Serializable {
     private static final long serialVersionUID = -8496869159673561976L;
     private String session_key;
     private String openid;
+    private String unionid;
+    private String errcode;
+    private String errmsg;
 
     /**
      * Gets serial version uid.
@@ -58,5 +61,59 @@ public class WxResponse implements Serializable {
      */
     public void setOpenid(String openid) {
         this.openid = openid;
+    }
+
+    /**
+     * Gets unionid.
+     *
+     * @return the unionid
+     */
+    public String getUnionid() {
+        return unionid;
+    }
+
+    /**
+     * Sets unionid.
+     *
+     * @param unionid the unionid
+     */
+    public void setUnionid(String unionid) {
+        this.unionid = unionid;
+    }
+
+    /**
+     * Gets errcode.
+     *
+     * @return the errcode
+     */
+    public String getErrcode() {
+        return errcode;
+    }
+
+    /**
+     * Sets errcode.
+     *
+     * @param errcode the errcode
+     */
+    public void setErrcode(String errcode) {
+        this.errcode = errcode;
+    }
+
+    /**
+     * Gets errmsg.
+     *
+     * @return the errmsg
+     */
+    public String getErrmsg() {
+        return errmsg;
+    }
+
+    /**
+     * Sets errmsg.
+     *
+     * @param errmsg the errmsg
+     */
+    public void setErrmsg(String errmsg) {
+        this.errmsg = errmsg;
     }
 }
