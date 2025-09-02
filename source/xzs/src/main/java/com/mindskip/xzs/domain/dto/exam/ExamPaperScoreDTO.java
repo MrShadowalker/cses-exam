@@ -19,10 +19,17 @@ public class ExamPaperScoreDTO {
 
     private Map<Integer, BigDecimal> originMaxSubjectScoreMap;
 
+    /**
+     * 各环节上限分数
+     *
+     */
     private Map<Integer, Integer> maxSubjectScoreMap;
 
     private Map<Integer, BigDecimal> originNormalSubjectScoreMap;
 
+    /**
+     * 各环节常态分数
+     */
     private Map<Integer, Integer> normalSubjectScoreMap;
 
     private String originMaxScoreCombination;
