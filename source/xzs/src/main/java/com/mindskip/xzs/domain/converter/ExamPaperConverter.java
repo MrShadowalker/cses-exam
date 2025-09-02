@@ -1,12 +1,15 @@
 package com.mindskip.xzs.domain.converter;
 
 import com.mindskip.xzs.domain.dto.exam.ExamPaperDTO;
+import com.mindskip.xzs.domain.dto.exam.ExamPaperReportDTO;
 import com.mindskip.xzs.domain.dto.question.QuestionDTO;
 import com.mindskip.xzs.domain.entity.ExamPaper;
+import com.mindskip.xzs.domain.entity.ExamPaperReport;
 import com.mindskip.xzs.domain.entity.Question;
 import com.mindskip.xzs.domain.enums.VersionEnum;
 import com.mindskip.xzs.domain.viewmodel.student.exampaper.ExamPaperViewModel;
 import com.mindskip.xzs.domain.viewmodel.student.exampaper.QuestionViewModel;
+import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,12 @@ public class ExamPaperConverter {
         }
         vm.setQuestionCount(examPaperDTO.getQuestions().size());
         return vm;
+    }
+
+    public static ExamPaperReport dtoToEntity(ExamPaperReportDTO examPaperReportDTO) {
+        ExamPaperReport examPaperReport = new ExamPaperReport();
+        BeanUtils.copyProperties(examPaperReportDTO, examPaperReport);
+        return examPaperReport;
     }
 
 

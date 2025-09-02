@@ -10,7 +10,11 @@ public interface RankMapper extends BaseMapper<Rank> {
     /**
      * 根据组合hash查询排名信息
      * @param combinationHash
-     * @return
      */
     Rank selectByCombinationHash(String combinationHash);
+
+    /**
+     * 查询排序总量
+     */
+    Integer selectTotalRank();
 }

@@ -1,4 +1,4 @@
-INSERT INTO `t_painpoint_config` (`subject`, `subject_name`, `level`, `name`, `description`)
+INSERT INTO `t_pain_point` (`subject`, `subject_name`, `level`, `name`, `description`)
 VALUES
 (1, '信息获取', 1, '信息过载症', '每天摄入300条信息，真正消化的不足3%→你的大脑正在遭受垃圾信息轰炸。痛点消失L2。'),
 (1, '信息获取', 1, '信息筛选无能', '面对海量信息像在迷宫中打转；文档搜索超15分钟无结果。痛点消失L2。'),
