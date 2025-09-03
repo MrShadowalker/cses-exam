@@ -4,6 +4,7 @@ import com.mindskip.xzs.domain.enums.VersionEnum;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 试卷答案提交
@@ -67,7 +68,17 @@ public class ExamPaperReportViewModel {
      */
     private String synergyAnalysis;
 
-    private List<String> probablePainpoints;
+    /**
+     * 大概率存在的痛点
+     * key 名字
+     * value 描述
+     */
+    private Map<String, String> probablePainpoints;
 
-    private List<String> possiblePainpoints;
+    /**
+     * 可能存在的痛点
+     * key 名字
+     * value 描述
+     */
+    private Map<String, String> possiblePainpoints;
 }

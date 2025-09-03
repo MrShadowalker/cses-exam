@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mindskip.xzs.repository.ExamPaperReportMapper">
+    <resultMap id="BaseResultMap" type="com.mindskip.xzs.domain.entity.ExamPaperReport">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="exam_paper_id" jdbcType="INTEGER" property="examPaperId"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="version" jdbcType="VARCHAR" property="version"/>
+        <result column="normal_rank" jdbcType="INTEGER" property="normalRank"/>
+        <result column="max_rank" jdbcType="INTEGER" property="maxRank"/>
+        <result column="max_rank_description" jdbcType="VARCHAR" property="maxRankDescription"/>
+        <result column="advantage" jdbcType="VARCHAR" property="advantage"/>
+        <result column="need_improvement" jdbcType="VARCHAR" property="needImprovement"/>
+        <result column="bottleneck" jdbcType="VARCHAR" property="bottleneck"/>
+        <result column="synergy_analysis" jdbcType="VARCHAR" property="synergyAnalysis"/>
+        <result column="probable_painpoints" jdbcType="VARCHAR" property="probablePainpoints"/>
+        <result column="possible_painpoints" jdbcType="VARCHAR" property="possiblePainpoints"/>
+        <result column="probable_painpoints_text" jdbcType="VARCHAR" property="probablePainpointsText"/>
+        <result column="possible_painpoints_text" jdbcType="VARCHAR" property="possiblePainpointsText"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="TINYINT" property="deleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, exam_paper_id, user_id, version, normal_rank, max_rank, max_rank_description, advantage, need_improvement, bottleneck, synergy_analysis,
+        probable_painpoints, possible_painpoints, probable_painpoints_text, possible_painpoints_text, create_time, update_time, deleted
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_exam_paper_report
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from t_exam_paper_report
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.mindskip.xzs.domain.entity.ExamPaperReport" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into t_exam_paper_report (exam_paper_id, user_id, version, normal_rank, max_rank, max_rank_description,
+                                         advantage, need_improvement, bottleneck, synergy_analysis,
+                                         probable_painpoints, possible_painpoints, probable_painpoints_text,
+                                         possible_painpoints_text, create_time, update_time, deleted)
+        values (#{examPaperId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{version,jdbcType=VARCHAR},
+                #{normalRank,jdbcType=INTEGER}, #{maxRank,jdbcType=INTEGER}, #{maxRankDescription,jdbcType=VARCHAR},
+                #{advantage,jdbcType=VARCHAR}, #{needImprovement,jdbcType=VARCHAR}, #{bottleneck,jdbcType=VARCHAR},
+                #{synergyAnalysis,jdbcType=VARCHAR},
+                #{probablePainpoints,jdbcType=VARCHAR}, #{possiblePainpoints,jdbcType=VARCHAR},
+                #{probablePainpointsText,jdbcType=VARCHAR}, #{possiblePainpointsText,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.mindskip.xzs.domain.entity.ExamPaperReport" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into t_exam_paper_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="examPaperId != null">
+                exam_paper_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="normalRank != null">
+                normal_rank,
+            </if>
+            <if test="maxRank != null">
+                max_rank,
+            </if>
+            <if test="maxRankDescription != null">
+                max_rank_description,
+            </if>
+            <if test="advantage != null">
+                advantage,
+            </if>
+            <if test="needImprovement != null">
+                need_improvement,
+            </if>
+            <if test="bottleneck != null">
+                bottleneck,
+            </if>
+            <if test="synergyAnalysis != null">
+                synergy_analysis,
+            </if>
+            <if test="probablePainpoints != null">
+                probable_painpoints,
+            </if>
+            <if test="possiblePainpoints != null">
+                possible_painpoints,
+            </if>
+            <if test="probablePainpointsText != null">
+                probable_painpoints_text,
+            </if>
+            <if test="possiblePainpointsText != null">
+                possible_painpoints_text,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleted != null">
+                deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="examPaperId != null">
+                #{examPaperId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="normalRank != null">
+                #{normalRank,jdbcType=INTEGER},
+            </if>
+            <if test="maxRank != null">
+                #{maxRank,jdbcType=INTEGER},
+            </if>
+            <if test="maxRankDescription != null">
+                #{maxRankDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="advantage != null">
+                #{advantage,jdbcType=VARCHAR},
+            </if>
+            <if test="needImprovement != null">
+                #{needImprovement,jdbcType=VARCHAR},
+            </if>
+            <if test="bottleneck != null">
+                #{bottleneck,jdbcType=VARCHAR},
+            </if>
+            <if test="synergyAnalysis != null">
+                #{synergyAnalysis,jdbcType=VARCHAR},
+            </if>
+            <if test="probablePainpoints != null">
+                #{probablePainpoints,jdbcType=VARCHAR},
+            </if>
+            <if test="possiblePainpoints != null">
+                #{possiblePainpoints,jdbcType=VARCHAR},
+            </if>
+            <if test="probablePainpointsText != null">
+                #{probablePainpointsText,jdbcType=VARCHAR},
+            </if>
+            <if test="possiblePainpointsText != null">
+                #{possiblePainpointsText,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                #{deleted,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mindskip.xzs.domain.entity.ExamPaperReport">
+        update t_exam_paper_report
+        <set>
+            <if test="content != null">
+                exam_paper_id = #{examPaperId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="normalRank != null">
+                normal_rank = #{normalRank,jdbcType=INTEGER},
+            </if>
+            <if test="maxRank != null">
+                max_rank = #{maxRank,jdbcType=INTEGER},
+            </if>
+            <if test="maxRankDescription != null">
+                max_rank_description = #{maxRankDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="advantage != null">
+                advantage = #{advantage,jdbcType=VARCHAR},
+            </if>
+            <if test="needImprovement != null">
+                need_improvement = #{needImprovement,jdbcType=VARCHAR},
+            </if>
+            <if test="bottleneck != null">
+                bottleneck = #{bottleneck,jdbcType=VARCHAR},
+            </if>
+            <if test="synergyAnalysis != null">
+                synergy_analysis = #{synergyAnalysis,jdbcType=VARCHAR},
+            </if>
+            <if test="probablePainpoints != null">
+                probable_painpoints = #{probablePainpoints,jdbcType=VARCHAR},
+            </if>
+            <if test="possiblePainpoints != null">
+                possible_painpoints = #{possiblePainpoints,jdbcType=VARCHAR},
+            </if>
+            <if test="probablePainpointsText != null">
+                probable_painpoints_text = #{probablePainpointsText,jdbcType=VARCHAR},
+            </if>
+            <if test="possiblePainpointsText != null">
+                possible_painpoints_text = #{possiblePainpointsText,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mindskip.xzs.domain.entity.ExamPaperReport">
+        update t_exam_paper_report
+        set exam_paper_id            = #{examPaperId,jdbcType=INTEGER},
+            user_id                  = #{userId,jdbcType=INTEGER},
+            version                  = #{version,jdbcType=VARCHAR},
+            normal_rank              = #{normalRank,jdbcType=INTEGER},
+            max_rank                 = #{maxRank,jdbcType=INTEGER},
+            max_rank_description     = #{maxRankDescription,jdbcType=VARCHAR},
+            advantage                = #{advantage,jdbcType=VARCHAR},
+            need_improvement         = #{needImprovement,jdbcType=VARCHAR},
+            bottleneck               = #{bottleneck,jdbcType=VARCHAR},
+            synergy_analysis         = #{synergyAnalysis,jdbcType=VARCHAR},
+            probable_painpoints      = #{probablePainpoints,jdbcType=VARCHAR},
+            possible_painpoints      = #{possiblePainpoints,jdbcType=VARCHAR},
+            probable_painpoints_text = #{probablePainpointsText,jdbcType=VARCHAR},
+            possible_painpoints_text = #{possiblePainpointsText,jdbcType=VARCHAR},
+            create_time              = #{createTime,jdbcType=TIMESTAMP},
+            update_time              = #{updateTime,jdbcType=TIMESTAMP},
+            deleted                  = #{deleted,jdbcType=TINYINT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
