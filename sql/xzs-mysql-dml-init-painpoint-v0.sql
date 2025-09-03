@@ -1,4 +1,4 @@
-INSERT INTO `t_painpoint_config_v0` (`subject`, `subject_name`, `level`, `painpoint`)
+INSERT INTO `t_painpoint_config` (`subject`, `subject_name`, `level`, `painpoint`)
 VALUES
 (1, '信息获取', 1, '<strong>信息过载症</strong>：每天摄入300条信息，真正消化的不足3%→你的大脑正在遭受垃圾信息轰炸。痛点消失L2。<br><strong>信息筛选无能</strong>：面对海量信息像在迷宫中打转；文档搜索超15分钟无结果。痛点消失L2。'),
 (1, '信息获取', 2, '<strong>认知偏食危机</strong>：只刷感兴趣内容 → 思维萎缩成单向度怪物；行业报告混杂32%谣言。痛点消失L3。<br><strong>信息幻觉症</strong>：收藏100+文章但阅读率<15%；形成"僵尸资源"库。痛点消失L3。<br><strong>信息广度萎缩</strong>：拒绝尝试新领域→被困夕阳行业存款缩水（转型成功者收入+217%，数据来自麦肯锡行业报告（2023））。痛点消失L3。'),

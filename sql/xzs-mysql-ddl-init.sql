@@ -23,8 +23,8 @@ CREATE TABLE `t_rank_config`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
 
 -- 痛点配置
-DROP TABLE IF EXISTS `t_painpoint_config`;
-CREATE TABLE `t_painpoint_config`  (
+DROP TABLE IF EXISTS `t_pain_point`;
+CREATE TABLE `t_pain_point`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `subject` int NULL DEFAULT NULL comment '环节',
   `subject_name` varchar(32) NULL DEFAULT NULL comment '环节名称',
@@ -34,8 +34,8 @@ CREATE TABLE `t_painpoint_config`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT;
 
-DROP TABLE IF EXISTS `t_painpoint_config_v0`;
-CREATE TABLE `t_painpoint_config_v0`  (
+DROP TABLE IF EXISTS `t_painpoint_config`;
+CREATE TABLE `t_painpoint_config`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `subject` int NULL DEFAULT NULL comment '环节',
   `subject_name` varchar(32) NULL DEFAULT NULL comment '环节名称',
@@ -181,8 +181,18 @@ CREATE TABLE `t_exam_paper_report`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `exam_paper_id` int NULL DEFAULT NULL comment '试卷id',
   `user_id` int NULL DEFAULT NULL comment '用户id',
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL comment '标题',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL comment '内容',
+  `version` varchar(32) NULL DEFAULT NULL comment '版本',
+  `normal_rank` int NULL DEFAULT NULL comment '常态排名',
+  `max_rank` int NULL DEFAULT NULL comment '上限排名',
+  `max_rank_description`  text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL comment '上限排名描述',
+  `advantage` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL comment '优势',
+  `need_improvement` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL comment '待提升点',
+  `bottleneck` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL comment '瓶颈',
+  `synergy_analysis` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL comment '整体协同性分析',
+  `probable_painpoints` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL comment '大概率存在的痛点',
+  `possible_painpoints` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL comment '可能存在的痛点',
+  `probable_painpoints_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL comment '大概率存在的痛点描述',
+  `possible_painpoints_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL comment '可能存在的痛点描述',
   `create_time` datetime NULL DEFAULT NULL comment '创建时间',
   `update_time` datetime NULL DEFAULT NULL comment '更新时间',
   `deleted` bit(1) NULL DEFAULT NULL comment '删除状态',

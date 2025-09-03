@@ -1,123 +1,54 @@
 package com.mindskip.xzs.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.mindskip.xzs.domain.enums.VersionEnum;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 public class ExamPaperReport implements Serializable {
 
     private static final long serialVersionUID = -814719595269981551L;
 
     private Integer id;
 
-    /**
-     * 标题
-     */
-    private String title;
+    private Integer examPaperId;
+
+    private Integer userId;
 
     /**
-     * 内容
+     * 版本
+     * @see VersionEnum#getCode()
      */
-    private String content;
+    private String version;
+
+    private Integer normalRank;
+
+    private Integer maxRank;
+
+    private String maxRankDescription;
+
+    private String advantage;
+
+    private String needImprovement;
+
+    private String bottleneck;
+
+    private String synergyAnalysis;
+
+    private String probablePainpoints;
+
+    private String possiblePainpoints;
+
+    private String probablePainpointsText;
+
+    private String possiblePainpointsText;
 
     private Date createTime;
 
-    /**
-     * 发送者用户ID
-     */
-    private Integer sendUserId;
+    private Date updateTime;
 
-    /**
-     * 发送者用户名
-     */
-    private String sendUserName;
+    private Byte deleted;
 
-    /**
-     * 发送者真实姓名
-     */
-    private String sendRealName;
-
-    /**
-     * 接收人数
-     */
-    private Integer receiveUserCount;
-
-    /**
-     * 已读人数
-     */
-    private Integer readCount;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getSendUserId() {
-        return sendUserId;
-    }
-
-    public void setSendUserId(Integer sendUserId) {
-        this.sendUserId = sendUserId;
-    }
-
-    public String getSendUserName() {
-        return sendUserName;
-    }
-
-    public void setSendUserName(String sendUserName) {
-        this.sendUserName = sendUserName == null ? null : sendUserName.trim();
-    }
-
-    public String getSendRealName() {
-        return sendRealName;
-    }
-
-    public void setSendRealName(String sendRealName) {
-        this.sendRealName = sendRealName == null ? null : sendRealName.trim();
-    }
-
-    public Integer getReceiveUserCount() {
-        return receiveUserCount;
-    }
-
-    public void setReceiveUserCount(Integer receiveUserCount) {
-        this.receiveUserCount = receiveUserCount;
-    }
-
-    public Integer getReadCount() {
-        return readCount;
-    }
-
-    public void setReadCount(Integer readCount) {
-        this.readCount = readCount;
-    }
 }
