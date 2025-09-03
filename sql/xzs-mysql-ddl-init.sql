@@ -249,4 +249,42 @@ CREATE TABLE `t_user_event_log`  (
      PRIMARY KEY (`id`)
    );
 
+-- 用户测评次数表
+DROP TABLE IF EXISTS `t_user_assessment_quota`;
+CREATE TABLE `t_user_assessment_quota` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL COMMENT '用户ID',
+  `assessment_type` int NOT NULL COMMENT '测评类型 (1:体验版测评 2:标准版测评 3:目标能力测评 4:深度咨询)',
+  `available_count` int NOT NULL DEFAULT 0 COMMENT '可用次数',
+  `used_count` int NOT NULL DEFAULT 0 COMMENT '已使用次数',
+  `total_count` int NOT NULL DEFAULT 0 COMMENT '总发放次数',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `deleted` bit(1) NULL DEFAULT b'0' COMMENT '是否删除',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `uk_user_assessment_type`(`user_id`, `assessment_type`) USING BTREE,
+  INDEX `idx_user_id`(`user_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT COMMENT = '用户测评次数表';
+
+-- 用户测评记录表
+DROP TABLE IF EXISTS `t_user_assessment`;
+CREATE TABLE `t_user_assessment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL COMMENT '用户ID',
+  `assessment_type` int NOT NULL COMMENT '测评类型 (1:体验版测评 2:标准版测评 3:目标能力测评 4:深度咨询)',
+  `status` int NOT NULL DEFAULT 1 COMMENT '测评状态 (1:已发放 2:进行中 3:已完成 4:已过期)',
+  `grant_time` datetime NULL DEFAULT NULL COMMENT '发放时间',
+  `start_time` datetime NULL DEFAULT NULL COMMENT '开始测评时间',
+  `complete_time` datetime NULL DEFAULT NULL COMMENT '完成测评时间',
+  `result_data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '测评结果数据 (JSON格式存储)',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `deleted` bit(1) NULL DEFAULT b'0' COMMENT '是否删除',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_user_id`(`user_id`) USING BTREE,
+  INDEX `idx_assessment_type`(`assessment_type`) USING BTREE,
+  INDEX `idx_status`(`status`) USING BTREE,
+  INDEX `idx_grant_time`(`grant_time`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT COMMENT = '用户测评记录表';
+
 SET FOREIGN_KEY_CHECKS = 1;

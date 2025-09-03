@@ -9,6 +9,7 @@ import com.mindskip.xzs.service.AuthenticationService;
 import com.mindskip.xzs.service.UserService;
 import com.mindskip.xzs.service.UserTokenService;
 import com.mindskip.xzs.service.UserShareRelationService;
+import com.mindskip.xzs.service.UserAssessmentQuotaService;
 import com.mindskip.xzs.utility.WxUtil;
 import com.mindskip.xzs.utility.WxResponse;
 import com.mindskip.xzs.domain.viewmodel.wx.student.user.BindInfo;
@@ -32,14 +33,16 @@ public class AuthController extends BaseWXApiController {
     private final UserService userService;
     private final UserTokenService userTokenService;
     private final UserShareRelationService userShareRelationService;
+    private final UserAssessmentQuotaService userAssessmentQuotaService;
 
     @Autowired
-    public AuthController(SystemConfig systemConfig, AuthenticationService authenticationService, UserService userService, UserTokenService userTokenService, UserShareRelationService userShareRelationService) {
+    public AuthController(SystemConfig systemConfig, AuthenticationService authenticationService, UserService userService, UserTokenService userTokenService, UserShareRelationService userShareRelationService, UserAssessmentQuotaService userAssessmentQuotaService) {
         this.systemConfig = systemConfig;
         this.authenticationService = authenticationService;
         this.userService = userService;
         this.userTokenService = userTokenService;
         this.userShareRelationService = userShareRelationService;
+        this.userAssessmentQuotaService = userAssessmentQuotaService;
     }
 
     @RequestMapping(value = "/bind", method = RequestMethod.POST)
@@ -130,6 +133,9 @@ public class AuthController extends BaseWXApiController {
             isNewUser = true;
             user = createUserFromWxInfo(openid, model);
             userService.insertUser(user);
+            
+            // 为新用户初始化测评次数并发放体验版测评次数
+            initNewUserAssessmentQuota(user.getId());
         }
 
         // 处理分享关系
@@ -261,6 +267,22 @@ public class AuthController extends BaseWXApiController {
             // 分享关系处理失败不影响用户登录，记录日志即可
             // 这里可以添加日志记录
             System.err.println("处理分享关系失败: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 初始化新用户测评次数
+     */
+    private void initNewUserAssessmentQuota(Integer userId) {
+        try {
+            // 初始化所有类型的测评次数为0
+            userAssessmentQuotaService.initUserQuotas(userId);
+            
+            // 为新用户发放1次体验版测评次数
+            userAssessmentQuotaService.grantTrialAssessment(userId);
+        } catch (Exception e) {
+            // 测评次数初始化失败不影响用户登录，记录日志即可
+            System.err.println("初始化用户测评次数失败: " + e.getMessage());
         }
     }
 }
