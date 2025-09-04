@@ -2,7 +2,9 @@ package com.mindskip.xzs.controller.student;
 
 import com.mindskip.xzs.base.BaseApiController;
 import com.mindskip.xzs.base.RestResponse;
+import com.mindskip.xzs.domain.converter.ExamPaperConverter;
 import com.mindskip.xzs.domain.dto.exam.ExamPaperAnswerSubmitDTO;
+import com.mindskip.xzs.domain.dto.exam.ExamPaperReportDTO;
 import com.mindskip.xzs.domain.dto.request.ExamPaperReportRequest;
 import com.mindskip.xzs.domain.viewmodel.student.exam.answer.ExamPaperAnswerSubmitViewModel;
 import com.mindskip.xzs.domain.viewmodel.student.exam.report.ExamPaperReportViewModel;
@@ -43,8 +45,9 @@ public class ExamPaperAnswerController extends BaseApiController {
 
     @PostMapping(value = "/report")
     public RestResponse<ExamPaperReportViewModel> report(@RequestBody ExamPaperReportRequest report) {
-        ExamPaperReportViewModel examPaperReportDTO = examPaperAnswerService.getExamPaperReport(report);
-        return RestResponse.ok(examPaperReportDTO);
+        ExamPaperReportDTO examPaperReportDTO = examPaperAnswerService.getExamPaperReport(report);
+        ExamPaperReportViewModel examPaperReportViewModel = ExamPaperConverter.reportDtoToViewModel(examPaperReportDTO);
+        return RestResponse.ok(examPaperReportViewModel);
     }
 
 

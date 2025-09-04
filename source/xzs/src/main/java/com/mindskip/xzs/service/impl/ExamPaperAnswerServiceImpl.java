@@ -9,12 +9,11 @@ import com.mindskip.xzs.domain.dto.question.QuestionDTO;
 import com.mindskip.xzs.domain.dto.request.ExamPaperReportRequest;
 import com.mindskip.xzs.domain.entity.*;
 import com.mindskip.xzs.domain.enums.SubjectEnum;
-import com.mindskip.xzs.domain.viewmodel.student.exam.report.ExamPaperReportViewModel;
+import com.mindskip.xzs.domain.param.ExamPaperReportParam;
 import com.mindskip.xzs.repository.*;
 import com.mindskip.xzs.service.ExamPaperAnswerService;
 import com.mindskip.xzs.service.TextContentService;
 import com.mindskip.xzs.utility.CollectionUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,9 +37,10 @@ public class ExamPaperAnswerServiceImpl extends BaseServiceImpl<ExamPaperQuestio
     private final RankMapper rankMapper;
     private final PainPointMapper painPointMapper;
     private final TextContentService textContentService;
+    private final ExamPaperAnswerService examPaperAnswerService;
 
     @Autowired
-    public ExamPaperAnswerServiceImpl(ExamPaperMapper examPaperMapper, QuestionMapper questionMapper, QuestionOptionMapper questionOptionMapper, ExamPaperQuestionAnswerMapper examPaperQuestionAnswerMapper, ExamPaperReportMapper examPaperReportMapper, RankMapper rankMapper, PainPointMapper painPointMapper, TextContentService textContentService) {
+    public ExamPaperAnswerServiceImpl(ExamPaperMapper examPaperMapper, QuestionMapper questionMapper, QuestionOptionMapper questionOptionMapper, ExamPaperQuestionAnswerMapper examPaperQuestionAnswerMapper, ExamPaperReportMapper examPaperReportMapper, RankMapper rankMapper, PainPointMapper painPointMapper, TextContentService textContentService, ExamPaperAnswerService examPaperAnswerService) {
         super(examPaperQuestionAnswerMapper);
         this.examPaperMapper = examPaperMapper;
         this.questionMapper = questionMapper;
@@ -50,6 +50,7 @@ public class ExamPaperAnswerServiceImpl extends BaseServiceImpl<ExamPaperQuestio
         this.rankMapper = rankMapper;
         this.painPointMapper = painPointMapper;
         this.textContentService = textContentService;
+        this.examPaperAnswerService = examPaperAnswerService;
     }
 
     @Override
@@ -483,8 +484,10 @@ public class ExamPaperAnswerServiceImpl extends BaseServiceImpl<ExamPaperQuestio
         }
         examPaperReportDTO.setProbablePainpoints(probablePainpoints);
         if (!CollectionUtils.isEmpty(probablePainpoints)) {
-            List<String> probablePainpointsText = painPointMapper.selectContentByIds(probablePainpoints);
-            examPaperReportDTO.setProbablePainpointsText(probablePainpointsText);
+            List<PainPoint> probablePainpointsText = painPointMapper.selectByIds(probablePainpoints);
+            Map<String, String> probablePainpointsTextMap = probablePainpointsText.stream()
+                    .collect(Collectors.toMap(PainPoint::getName, PainPoint::getDescription));
+            examPaperReportDTO.setProbablePainpointsText(probablePainpointsTextMap);
         }
 
         /**
@@ -506,22 +509,27 @@ public class ExamPaperAnswerServiceImpl extends BaseServiceImpl<ExamPaperQuestio
         }
         examPaperReportDTO.setPossiblePainpoints(possiblePainpoints);
         if (!CollectionUtils.isEmpty(possiblePainpoints)) {
-            List<String> possiblePainpointsText = painPointMapper.selectContentByIds(possiblePainpoints);
-            examPaperReportDTO.setPossiblePainpointsText(possiblePainpointsText);
+            List<PainPoint> possiblePainpointsText = painPointMapper.selectByIds(possiblePainpoints);
+            Map<String, String> possiblePainpointsTextMap = possiblePainpointsText.stream()
+                    .collect(Collectors.toMap(PainPoint::getName, PainPoint::getDescription));
+            examPaperReportDTO.setPossiblePainpointsText(possiblePainpointsTextMap);
         }
 
         return examPaperReportDTO;
     }
 
     private void saveExamPaperReport(ExamPaperReportDTO examPaperReportDTO) {
-        ExamPaperReport examPaperReport = new ExamPaperReport();
+        ExamPaperReport examPaperReport = ExamPaperConverter.reportDtoToEntity(examPaperReportDTO);
         examPaperReportMapper.insert(examPaperReport);
-
     }
 
     @Override
-    public ExamPaperReportViewModel getExamPaperReport(ExamPaperReportRequest report) {
-        return null;
+    public ExamPaperReportDTO getExamPaperReport(ExamPaperReportRequest report) {
+        ExamPaperReportParam examPaperReportParam = new ExamPaperReportParam();
+        examPaperReportParam.setExamPaperId(report.getExamPaperId());
+        examPaperReportParam.setUserId(report.getUserId());
+        ExamPaperReport examPaperReport = examPaperReportMapper.selectByParams(examPaperReportParam);
+        return ExamPaperConverter.reportEntityToDto(examPaperReport);
     }
 
 }

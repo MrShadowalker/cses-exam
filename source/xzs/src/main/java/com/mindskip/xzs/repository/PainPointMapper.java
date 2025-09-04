@@ -19,6 +19,4 @@ public interface PainPointMapper extends BaseMapper<PainPoint> {
 
     List<PainPoint> selectByIds(List<Integer> ids);
 
-    List<String> selectContentByIds(List<Integer> ids);
-
 }

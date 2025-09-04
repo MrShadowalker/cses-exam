@@ -4,6 +4,7 @@ import com.mindskip.xzs.domain.enums.VersionEnum;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Shadowalker
@@ -43,8 +44,8 @@ public class ExamPaperReportDTO {
 
     private List<Integer> possiblePainpoints;
 
-    private List<String> probablePainpointsText;
+    private Map<String, String> probablePainpointsText;
 
-    private List<String> possiblePainpointsText;
+    private Map<String, String> possiblePainpointsText;
 
 }
