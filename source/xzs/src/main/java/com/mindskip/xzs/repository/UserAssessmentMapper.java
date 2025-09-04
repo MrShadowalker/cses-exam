@@ -17,31 +17,31 @@ public interface UserAssessmentMapper extends BaseMapper<UserAssessment> {
      * 根据用户ID和测评类型查询测评记录
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @return 测评记录列表
      */
-    List<UserAssessment> selectByUserIdAndType(@Param("userId") Integer userId, @Param("assessmentType") Integer assessmentType);
+    List<UserAssessment> selectByUserIdAndVersion(@Param("userId") Integer userId, @Param("version") String version);
 
     /**
      * 根据用户ID和测评类型查询最近的测评记录
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @return 最近的测评记录
      */
-    UserAssessment selectLatestByUserIdAndType(@Param("userId") Integer userId, @Param("assessmentType") Integer assessmentType);
+    UserAssessment selectLatestByUserIdAndVersion(@Param("userId") Integer userId, @Param("version") String version);
 
     /**
      * 根据用户ID和测评类型查询指定月份内的测评记录
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @param startDate 开始日期
      * @param endDate 结束日期
      * @return 测评记录列表
      */
-    List<UserAssessment> selectByUserIdAndTypeInMonth(@Param("userId") Integer userId, 
-                                                      @Param("assessmentType") Integer assessmentType,
+    List<UserAssessment> selectByUserIdAndVersionInMonth(@Param("userId") Integer userId,
+                                                      @Param("version") String version,
                                                       @Param("startDate") Date startDate, 
                                                       @Param("endDate") Date endDate);
 
@@ -65,22 +65,22 @@ public interface UserAssessmentMapper extends BaseMapper<UserAssessment> {
      * 统计用户指定类型的测评次数
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @return 测评次数
      */
-    int countByUserIdAndType(@Param("userId") Integer userId, @Param("assessmentType") Integer assessmentType);
+    int countByUserIdAndVersion(@Param("userId") Integer userId, @Param("version") String version);
 
     /**
      * 统计用户指定类型在指定月份内的测评次数
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @param startDate 开始日期
      * @param endDate 结束日期
      * @return 测评次数
      */
-    int countByUserIdAndTypeInMonth(@Param("userId") Integer userId, 
-                                    @Param("assessmentType") Integer assessmentType,
+    int countByUserIdAndVersionInMonth(@Param("userId") Integer userId,
+                                    @Param("version") String version,
                                     @Param("startDate") Date startDate, 
                                     @Param("endDate") Date endDate);
 }

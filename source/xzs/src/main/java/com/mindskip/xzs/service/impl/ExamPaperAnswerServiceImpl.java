@@ -37,10 +37,9 @@ public class ExamPaperAnswerServiceImpl extends BaseServiceImpl<ExamPaperQuestio
     private final RankMapper rankMapper;
     private final PainPointMapper painPointMapper;
     private final TextContentService textContentService;
-    private final ExamPaperAnswerService examPaperAnswerService;
 
     @Autowired
-    public ExamPaperAnswerServiceImpl(ExamPaperMapper examPaperMapper, QuestionMapper questionMapper, QuestionOptionMapper questionOptionMapper, ExamPaperQuestionAnswerMapper examPaperQuestionAnswerMapper, ExamPaperReportMapper examPaperReportMapper, RankMapper rankMapper, PainPointMapper painPointMapper, TextContentService textContentService, ExamPaperAnswerService examPaperAnswerService) {
+    public ExamPaperAnswerServiceImpl(ExamPaperMapper examPaperMapper, QuestionMapper questionMapper, QuestionOptionMapper questionOptionMapper, ExamPaperQuestionAnswerMapper examPaperQuestionAnswerMapper, ExamPaperReportMapper examPaperReportMapper, RankMapper rankMapper, PainPointMapper painPointMapper, TextContentService textContentService) {
         super(examPaperQuestionAnswerMapper);
         this.examPaperMapper = examPaperMapper;
         this.questionMapper = questionMapper;
@@ -50,7 +49,6 @@ public class ExamPaperAnswerServiceImpl extends BaseServiceImpl<ExamPaperQuestio
         this.rankMapper = rankMapper;
         this.painPointMapper = painPointMapper;
         this.textContentService = textContentService;
-        this.examPaperAnswerService = examPaperAnswerService;
     }
 
     @Override

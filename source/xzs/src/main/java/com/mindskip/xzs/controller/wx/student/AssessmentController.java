@@ -4,7 +4,7 @@ import com.mindskip.xzs.base.RestResponse;
 import com.mindskip.xzs.controller.wx.BaseWXApiController;
 import com.mindskip.xzs.domain.entity.UserAssessment;
 import com.mindskip.xzs.domain.entity.UserAssessmentQuota;
-import com.mindskip.xzs.domain.enums.AssessmentTypeEnum;
+import com.mindskip.xzs.domain.enums.VersionEnum;
 import com.mindskip.xzs.service.UserAssessmentQuotaService;
 import com.mindskip.xzs.service.UserAssessmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class AssessmentController extends BaseWXApiController {
         
         Map<String, Object> result = new HashMap<>();
         for (UserAssessmentQuota quota : quotas) {
-            String typeName = AssessmentTypeEnum.getNameByCode(quota.getAssessmentType());
+            String typeName = VersionEnum.getNameByCode(quota.getVersion());
             Map<String, Object> quotaInfo = new HashMap<>();
             quotaInfo.put("availableCount", quota.getAvailableCount());
             quotaInfo.put("usedCount", quota.getUsedCount());
@@ -63,7 +63,7 @@ public class AssessmentController extends BaseWXApiController {
     public RestResponse checkCanStartAssessment(@Valid @RequestBody AssessmentCheckRequest request) {
         Integer userId = getCurrentUser().getId();
         UserAssessmentService.AssessmentCheckResult checkResult = 
-            userAssessmentService.checkCanStartAssessment(userId, request.getAssessmentType());
+            userAssessmentService.checkCanStartAssessment(userId, request.getVersion());
         
         Map<String, Object> result = new HashMap<>();
         result.put("canStart", checkResult.isCanStart());
@@ -81,12 +81,12 @@ public class AssessmentController extends BaseWXApiController {
     @RequestMapping(value = "/start", method = RequestMethod.POST)
     public RestResponse startAssessment(@Valid @RequestBody AssessmentStartRequest request) {
         Integer userId = getCurrentUser().getId();
-        Integer assessmentId = userAssessmentService.startAssessment(userId, request.getAssessmentType());
+        Integer assessmentId = userAssessmentService.startAssessment(userId, request.getVersion());
         
         if (assessmentId == null) {
             // 检查失败原因
             UserAssessmentService.AssessmentCheckResult checkResult = 
-                userAssessmentService.checkCanStartAssessment(userId, request.getAssessmentType());
+                userAssessmentService.checkCanStartAssessment(userId, request.getVersion());
             return RestResponse.fail(1, checkResult.getMessage());
         }
         
@@ -115,12 +115,12 @@ public class AssessmentController extends BaseWXApiController {
      * 获取用户测评记录
      */
     @RequestMapping(value = "/records", method = RequestMethod.GET)
-    public RestResponse getUserAssessments(@RequestParam(required = false) Integer assessmentType) {
+    public RestResponse getUserAssessments(@RequestParam(required = false) String version) {
         Integer userId = getCurrentUser().getId();
         List<UserAssessment> assessments;
         
-        if (assessmentType != null) {
-            assessments = userAssessmentService.getUserAssessmentsByType(userId, assessmentType);
+        if (version != null) {
+            assessments = userAssessmentService.getUserAssessmentsByType(userId, version);
         } else {
             assessments = userAssessmentService.getUserAssessments(userId);
         }
@@ -134,10 +134,11 @@ public class AssessmentController extends BaseWXApiController {
     @RequestMapping(value = "/types", method = RequestMethod.GET)
     public RestResponse getAssessmentTypes() {
         Map<String, Object> result = new HashMap<>();
-        for (AssessmentTypeEnum type : AssessmentTypeEnum.values()) {
+        for (VersionEnum type : VersionEnum.values()) {
             Map<String, Object> typeInfo = new HashMap<>();
             typeInfo.put("code", type.getCode());
             typeInfo.put("name", type.getName());
+            typeInfo.put("description", type.getDescription());
             result.put(type.getName(), typeInfo);
         }
         
@@ -148,15 +149,19 @@ public class AssessmentController extends BaseWXApiController {
      * 测评检查请求类
      */
     public static class AssessmentCheckRequest {
+        /**
+         * 测评类型
+         * @see VersionEnum#getCode()
+         */
         @NotNull(message = "测评类型不能为空")
-        private Integer assessmentType;
+        private String version;
 
-        public Integer getAssessmentType() {
-            return assessmentType;
+        public String getVersion() {
+            return version;
         }
 
-        public void setAssessmentType(Integer assessmentType) {
-            this.assessmentType = assessmentType;
+        public void setVersion(String version) {
+            this.version = version;
         }
     }
 
@@ -164,15 +169,19 @@ public class AssessmentController extends BaseWXApiController {
      * 开始测评请求类
      */
     public static class AssessmentStartRequest {
+        /**
+         * 测评类型
+         * @see VersionEnum#getCode()
+         */
         @NotNull(message = "测评类型不能为空")
-        private Integer assessmentType;
+        private String version;
 
-        public Integer getAssessmentType() {
-            return assessmentType;
+        public String getVersion() {
+            return version;
         }
 
-        public void setAssessmentType(Integer assessmentType) {
-            this.assessmentType = assessmentType;
+        public void setVersion(String version) {
+            this.version = version;
         }
     }
 

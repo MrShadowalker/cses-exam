@@ -1,16 +1,10 @@
 package com.mindskip.xzs.controller.admin;
 
 import com.mindskip.xzs.base.BaseApiController;
-import com.mindskip.xzs.base.RestResponse;
 import com.mindskip.xzs.service.*;
-import com.mindskip.xzs.utility.DateTimeUtil;
-import com.mindskip.xzs.domain.viewmodel.admin.dashboard.IndexVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController("AdminDashboardController")
 @RequestMapping(value = "/api/admin/dashboard")

@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.mindskip.xzs.domain.entity.UserAssessmentQuota">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="assessment_type" jdbcType="INTEGER" property="assessmentType" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
     <result column="available_count" jdbcType="INTEGER" property="availableCount" />
     <result column="used_count" jdbcType="INTEGER" property="usedCount" />
     <result column="total_count" jdbcType="INTEGER" property="totalCount" />
@@ -14,7 +14,7 @@
   </resultMap>
   
   <sql id="Base_Column_List">
-    id, user_id, assessment_type, available_count, used_count, total_count, 
+    id, user_id, version, available_count, used_count, total_count,
     create_time, update_time, deleted
   </sql>
   
@@ -31,15 +31,15 @@
     from t_user_assessment_quota
     where user_id = #{userId,jdbcType=INTEGER}
     and deleted = 0
-    order by assessment_type
+    order by version
   </select>
   
-  <select id="selectByUserIdAndType" resultMap="BaseResultMap">
+  <select id="selectByUserIdAndVersion" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_user_assessment_quota
     where user_id = #{userId,jdbcType=INTEGER}
-    and assessment_type = #{assessmentType,jdbcType=INTEGER}
+    and version = #{version,jdbcType=VARCHAR}
     and deleted = 0
   </select>
   
@@ -47,7 +47,7 @@
     select count(*) > 0
     from t_user_assessment_quota
     where user_id = #{userId,jdbcType=INTEGER}
-    and assessment_type = #{assessmentType,jdbcType=INTEGER}
+    and version = #{version,jdbcType=VARCHAR}
     and available_count >= #{requiredCount,jdbcType=INTEGER}
     and deleted = 0
   </select>
@@ -58,7 +58,7 @@
         total_count = total_count + #{count,jdbcType=INTEGER},
         update_time = now()
     where user_id = #{userId,jdbcType=INTEGER}
-    and assessment_type = #{assessmentType,jdbcType=INTEGER}
+    and version = #{version,jdbcType=VARCHAR}
     and deleted = 0
   </update>
   
@@ -68,7 +68,7 @@
         used_count = used_count + #{count,jdbcType=INTEGER},
         update_time = now()
     where user_id = #{userId,jdbcType=INTEGER}
-    and assessment_type = #{assessmentType,jdbcType=INTEGER}
+    and version = #{version,jdbcType=VARCHAR}
     and available_count >= #{count,jdbcType=INTEGER}
     and deleted = 0
   </update>
@@ -79,10 +79,10 @@
   </delete>
   
   <insert id="insert" parameterType="com.mindskip.xzs.domain.entity.UserAssessmentQuota" useGeneratedKeys="true" keyProperty="id">
-    insert into t_user_assessment_quota (user_id, assessment_type, available_count, 
+    insert into t_user_assessment_quota (user_id, version, available_count,
       used_count, total_count, create_time, update_time, 
       deleted)
-    values (#{userId,jdbcType=INTEGER}, #{assessmentType,jdbcType=INTEGER}, #{availableCount,jdbcType=INTEGER}, 
+    values (#{userId,jdbcType=INTEGER}, #{version,jdbcType=VARCHAR}, #{availableCount,jdbcType=INTEGER},
       #{usedCount,jdbcType=INTEGER}, #{totalCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{deleted,jdbcType=BIT})
   </insert>
@@ -93,8 +93,8 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="assessmentType != null">
-        assessment_type,
+      <if test="version != null">
+        version,
       </if>
       <if test="availableCount != null">
         available_count,
@@ -119,8 +119,8 @@
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
       </if>
-      <if test="assessmentType != null">
-        #{assessmentType,jdbcType=INTEGER},
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
       </if>
       <if test="availableCount != null">
         #{availableCount,jdbcType=INTEGER},
@@ -150,7 +150,7 @@
         user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="assessmentType != null">
-        assessment_type = #{assessmentType,jdbcType=INTEGER},
+        version = #{version,jdbcType=VARCHAR},
       </if>
       <if test="availableCount != null">
         available_count = #{availableCount,jdbcType=INTEGER},
@@ -177,7 +177,7 @@
   <update id="updateByPrimaryKey" parameterType="com.mindskip.xzs.domain.entity.UserAssessmentQuota">
     update t_user_assessment_quota
     set user_id = #{userId,jdbcType=INTEGER},
-      assessment_type = #{assessmentType,jdbcType=INTEGER},
+      version = #{version,jdbcType=VARCHAR},
       available_count = #{availableCount,jdbcType=INTEGER},
       used_count = #{usedCount,jdbcType=INTEGER},
       total_count = #{totalCount,jdbcType=INTEGER},

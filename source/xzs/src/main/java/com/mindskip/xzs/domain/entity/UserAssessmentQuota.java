@@ -1,5 +1,6 @@
 package com.mindskip.xzs.domain.entity;
 
+import com.mindskip.xzs.domain.enums.VersionEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -24,9 +25,10 @@ public class UserAssessmentQuota implements Serializable {
     private Integer userId;
 
     /**
-     * 测评类型 (1:体验版测评 2:标准版测评 3:目标能力测评 4:深度咨询)
+     * 测评类型
+     * @see VersionEnum#getCode()
      */
-    private Integer assessmentType;
+    private String version;
 
     /**
      * 可用次数
@@ -62,8 +64,8 @@ public class UserAssessmentQuota implements Serializable {
         this.userId = userId;
     }
 
-    public void setAssessmentType(Integer assessmentType) {
-        this.assessmentType = assessmentType;
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     public void setAvailableCount(Integer availableCount) {

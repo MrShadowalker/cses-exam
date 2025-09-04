@@ -249,22 +249,23 @@ CREATE TABLE `t_user_event_log`  (
    ALTER TABLE `t_user` ADD COLUMN `invite_user_id` int NULL COMMENT '邀请人用户ID';
    
  -- 创建分享关系表
-   CREATE TABLE `t_user_share_relation` (
-     `id` int NOT NULL AUTO_INCREMENT,
-     `share_user_id` int NOT NULL COMMENT '分享者用户ID',
-     `shared_user_id` int NOT NULL COMMENT '被分享者用户ID',
-     `shared_user_type` varchar(10) NULL COMMENT '被分享者是否新用户',
-     `share_scene` varchar(50) NULL COMMENT '分享场景',
-     `create_time` datetime NULL COMMENT '创建时间',
-     PRIMARY KEY (`id`)
-   );
+DROP TABLE IF EXISTS `t_user_share_relation`;
+CREATE TABLE `t_user_share_relation` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `share_user_id` int NOT NULL COMMENT '分享者用户ID',
+  `shared_user_id` int NOT NULL COMMENT '被分享者用户ID',
+  `shared_user_type` varchar(10) NULL COMMENT '被分享者是否新用户',
+  `share_scene` varchar(50) NULL COMMENT '分享场景',
+  `create_time` datetime NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT COMMENT '用户分享关系表';
 
 -- 用户测评次数表
 DROP TABLE IF EXISTS `t_user_assessment_quota`;
 CREATE TABLE `t_user_assessment_quota` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL COMMENT '用户ID',
-  `assessment_type` int NOT NULL COMMENT '测评类型 (1:体验版测评 2:标准版测评 3:目标能力测评 4:深度咨询)',
+  `version` varchar(32) NOT NULL COMMENT '测评类型',
   `available_count` int NOT NULL DEFAULT 0 COMMENT '可用次数',
   `used_count` int NOT NULL DEFAULT 0 COMMENT '已使用次数',
   `total_count` int NOT NULL DEFAULT 0 COMMENT '总发放次数',
@@ -272,7 +273,7 @@ CREATE TABLE `t_user_assessment_quota` (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `deleted` bit(1) NULL DEFAULT b'0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_user_assessment_type`(`user_id`, `assessment_type`) USING BTREE,
+  UNIQUE INDEX `uk_user_assessment_version`(`user_id`, `version`) USING BTREE,
   INDEX `idx_user_id`(`user_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT COMMENT = '用户测评次数表';
 
@@ -281,7 +282,7 @@ DROP TABLE IF EXISTS `t_user_assessment`;
 CREATE TABLE `t_user_assessment` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL COMMENT '用户ID',
-  `assessment_type` int NOT NULL COMMENT '测评类型 (1:体验版测评 2:标准版测评 3:目标能力测评 4:深度咨询)',
+  `version` varchar(32) NOT NULL COMMENT '测评类型',
   `status` int NOT NULL DEFAULT 1 COMMENT '测评状态 (1:已发放 2:进行中 3:已完成 4:已过期)',
   `grant_time` datetime NULL DEFAULT NULL COMMENT '发放时间',
   `start_time` datetime NULL DEFAULT NULL COMMENT '开始测评时间',
@@ -292,7 +293,7 @@ CREATE TABLE `t_user_assessment` (
   `deleted` bit(1) NULL DEFAULT b'0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_user_id`(`user_id`) USING BTREE,
-  INDEX `idx_assessment_type`(`assessment_type`) USING BTREE,
+  INDEX `idx_version`(`version`) USING BTREE,
   INDEX `idx_status`(`status`) USING BTREE,
   INDEX `idx_grant_time`(`grant_time`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = COMPACT COMMENT = '用户测评记录表';

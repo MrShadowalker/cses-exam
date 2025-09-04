@@ -2,7 +2,7 @@ package com.mindskip.xzs.service.impl;
 
 import com.mindskip.xzs.domain.entity.UserAssessment;
 import com.mindskip.xzs.domain.entity.UserShareRelation;
-import com.mindskip.xzs.domain.enums.AssessmentTypeEnum;
+import com.mindskip.xzs.domain.enums.VersionEnum;
 import com.mindskip.xzs.repository.UserAssessmentMapper;
 import com.mindskip.xzs.service.UserAssessmentQuotaService;
 import com.mindskip.xzs.service.UserAssessmentService;
@@ -37,22 +37,22 @@ public class UserAssessmentServiceImpl extends BaseServiceImpl<UserAssessment> i
 
     @Override
     @Transactional
-    public Integer startAssessment(Integer userId, Integer assessmentType) {
+    public Integer startAssessment(Integer userId, String version) {
         // 检查是否可以开始测评
-        AssessmentCheckResult checkResult = checkCanStartAssessment(userId, assessmentType);
+        AssessmentCheckResult checkResult = checkCanStartAssessment(userId, version);
         if (!checkResult.isCanStart()) {
             return null;
         }
 
         // 减少测评次数
-        if (!userAssessmentQuotaService.decreaseQuota(userId, assessmentType, 1)) {
+        if (!userAssessmentQuotaService.decreaseQuota(userId, version, 1)) {
             return null;
         }
 
         // 创建测评记录
         UserAssessment assessment = new UserAssessment();
         assessment.setUserId(userId);
-        assessment.setAssessmentType(assessmentType);
+        assessment.setVersion(version);
         assessment.setStatus(2); // 进行中
         assessment.setGrantTime(new Date());
         assessment.setStartTime(new Date());
@@ -80,7 +80,7 @@ public class UserAssessmentServiceImpl extends BaseServiceImpl<UserAssessment> i
         boolean success = userAssessmentMapper.updateByPrimaryKeySelective(assessment) > 0;
         
         // 如果完成的是体验版测评，检查是否需要给分享者发放标准版测评次数
-        if (success && assessment.getAssessmentType().equals(AssessmentTypeEnum.TRIAL.getCode())) {
+        if (success && assessment.getVersion().equals(VersionEnum.EXPERIENCE.getCode())) {
             handleTrialAssessmentCompletion(assessment.getUserId());
         }
         
@@ -89,20 +89,20 @@ public class UserAssessmentServiceImpl extends BaseServiceImpl<UserAssessment> i
 
     @Override
     @Transactional
-    public boolean grantAssessmentQuota(Integer userId, Integer assessmentType, Integer count) {
-        return userAssessmentQuotaService.increaseQuota(userId, assessmentType, count);
+    public boolean grantAssessmentQuota(Integer userId, String version, Integer count) {
+        return userAssessmentQuotaService.increaseQuota(userId, version, count);
     }
 
     @Override
-    public AssessmentCheckResult checkCanStartAssessment(Integer userId, Integer assessmentType) {
+    public AssessmentCheckResult checkCanStartAssessment(Integer userId, String version) {
         // 检查测评次数是否足够
-        if (!userAssessmentQuotaService.checkQuotaAvailable(userId, assessmentType, 1)) {
+        if (!userAssessmentQuotaService.checkQuotaAvailable(userId, version, 1)) {
             return new AssessmentCheckResult(false, "测评次数不够");
         }
 
         // 检查是否在当月已进行过该类型测评
-        if (hasAssessedInMonth(userId, assessmentType, new Date())) {
-            Date lastTime = getLastAssessmentTime(userId, assessmentType);
+        if (hasAssessedInMonth(userId, version, new Date())) {
+            Date lastTime = getLastAssessmentTime(userId, version);
             String message = "上次测评时间是" + formatDate(lastTime) + "，未满30日，无法再次测评";
             return new AssessmentCheckResult(false, message, lastTime);
         }
@@ -116,27 +116,27 @@ public class UserAssessmentServiceImpl extends BaseServiceImpl<UserAssessment> i
     }
 
     @Override
-    public List<UserAssessment> getUserAssessmentsByType(Integer userId, Integer assessmentType) {
-        return userAssessmentMapper.selectByUserIdAndType(userId, assessmentType);
+    public List<UserAssessment> getUserAssessmentsByType(Integer userId, String version) {
+        return userAssessmentMapper.selectByUserIdAndVersion(userId, version);
     }
 
     @Override
-    public UserAssessment getLatestAssessment(Integer userId, Integer assessmentType) {
-        return userAssessmentMapper.selectLatestByUserIdAndType(userId, assessmentType);
+    public UserAssessment getLatestAssessment(Integer userId, String version) {
+        return userAssessmentMapper.selectLatestByUserIdAndVersion(userId, version);
     }
 
     @Override
-    public int countUserAssessments(Integer userId, Integer assessmentType) {
-        return userAssessmentMapper.countByUserIdAndType(userId, assessmentType);
+    public int countUserAssessments(Integer userId, String version) {
+        return userAssessmentMapper.countByUserIdAndVersion(userId, version);
     }
 
     @Override
-    public int countUserAssessmentsInMonth(Integer userId, Integer assessmentType, Date startDate, Date endDate) {
-        return userAssessmentMapper.countByUserIdAndTypeInMonth(userId, assessmentType, startDate, endDate);
+    public int countUserAssessmentsInMonth(Integer userId, String version, Date startDate, Date endDate) {
+        return userAssessmentMapper.countByUserIdAndVersionInMonth(userId, version, startDate, endDate);
     }
 
     @Override
-    public boolean hasAssessedInMonth(Integer userId, Integer assessmentType, Date date) {
+    public boolean hasAssessedInMonth(Integer userId, String version, Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         
@@ -152,12 +152,12 @@ public class UserAssessmentServiceImpl extends BaseServiceImpl<UserAssessment> i
         calendar.add(Calendar.MONTH, 1);
         Date endDate = calendar.getTime();
         
-        return countUserAssessmentsInMonth(userId, assessmentType, startDate, endDate) > 0;
+        return countUserAssessmentsInMonth(userId, version, startDate, endDate) > 0;
     }
 
     @Override
-    public Date getLastAssessmentTime(Integer userId, Integer assessmentType) {
-        UserAssessment latestAssessment = getLatestAssessment(userId, assessmentType);
+    public Date getLastAssessmentTime(Integer userId, String version) {
+        UserAssessment latestAssessment = getLatestAssessment(userId, version);
         return latestAssessment != null ? latestAssessment.getGrantTime() : null;
     }
 
@@ -231,7 +231,7 @@ public class UserAssessmentServiceImpl extends BaseServiceImpl<UserAssessment> i
      * 检查用户是否已完成过体验版测评
      */
     private boolean hasCompletedTrialAssessment(Integer userId) {
-        List<UserAssessment> assessments = userAssessmentMapper.selectByUserIdAndType(userId, AssessmentTypeEnum.TRIAL.getCode());
+        List<UserAssessment> assessments = userAssessmentMapper.selectByUserIdAndVersion(userId, VersionEnum.EXPERIENCE.getCode());
         if (assessments == null || assessments.isEmpty()) {
             return false;
         }

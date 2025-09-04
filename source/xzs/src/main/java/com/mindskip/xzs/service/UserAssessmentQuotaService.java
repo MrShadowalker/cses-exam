@@ -21,49 +21,49 @@ public interface UserAssessmentQuotaService extends BaseService<UserAssessmentQu
      * 根据用户ID和测评类型查询测评次数记录
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @return 测评次数记录
      */
-    UserAssessmentQuota getUserQuota(Integer userId, Integer assessmentType);
+    UserAssessmentQuota getUserQuota(Integer userId, String version);
 
     /**
      * 增加用户测评次数
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @param count 增加的次数
      * @return 是否成功
      */
-    boolean increaseQuota(Integer userId, Integer assessmentType, Integer count);
+    boolean increaseQuota(Integer userId, String version, Integer count);
 
     /**
      * 减少用户测评次数
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @param count 减少的次数
      * @return 是否成功
      */
-    boolean decreaseQuota(Integer userId, Integer assessmentType, Integer count);
+    boolean decreaseQuota(Integer userId, String version, Integer count);
 
     /**
      * 检查用户是否有足够的测评次数
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @param requiredCount 需要的次数
      * @return 是否有足够的次数
      */
-    boolean checkQuotaAvailable(Integer userId, Integer assessmentType, Integer requiredCount);
+    boolean checkQuotaAvailable(Integer userId, String version, Integer requiredCount);
 
     /**
      * 获取用户指定类型的可用测评次数
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @return 可用次数
      */
-    Integer getAvailableCount(Integer userId, Integer assessmentType);
+    Integer getAvailableCount(Integer userId, String version);
 
     /**
      * 初始化用户测评次数（新用户注册时调用）

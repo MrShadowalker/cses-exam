@@ -1,7 +1,7 @@
 package com.mindskip.xzs.service;
 
 import com.mindskip.xzs.domain.entity.UserAssessment;
-import com.mindskip.xzs.domain.enums.AssessmentTypeEnum;
+import com.mindskip.xzs.domain.enums.VersionEnum;
 
 import java.util.Date;
 import java.util.List;
@@ -15,10 +15,11 @@ public interface UserAssessmentService extends BaseService<UserAssessment> {
      * 开始测评
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 版本
+     *     @see VersionEnum#getCode()
      * @return 测评记录ID，如果无法开始测评则返回null
      */
-    Integer startAssessment(Integer userId, Integer assessmentType);
+    Integer startAssessment(Integer userId, String version);
 
     /**
      * 完成测评
@@ -33,20 +34,21 @@ public interface UserAssessmentService extends BaseService<UserAssessment> {
      * 发放测评次数
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @param count 发放次数
      * @return 是否成功
      */
-    boolean grantAssessmentQuota(Integer userId, Integer assessmentType, Integer count);
+    boolean grantAssessmentQuota(Integer userId, String version, Integer count);
 
     /**
      * 检查用户是否可以开始测评
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 版本
+     *     @see VersionEnum#getCode()
      * @return 检查结果信息
      */
-    AssessmentCheckResult checkCanStartAssessment(Integer userId, Integer assessmentType);
+    AssessmentCheckResult checkCanStartAssessment(Integer userId, String version);
 
     /**
      * 根据用户ID查询所有测评记录
@@ -60,58 +62,58 @@ public interface UserAssessmentService extends BaseService<UserAssessment> {
      * 根据用户ID和测评类型查询测评记录
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @return 测评记录列表
      */
-    List<UserAssessment> getUserAssessmentsByType(Integer userId, Integer assessmentType);
+    List<UserAssessment> getUserAssessmentsByType(Integer userId, String version);
 
     /**
      * 获取用户最近的测评记录
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @return 最近的测评记录
      */
-    UserAssessment getLatestAssessment(Integer userId, Integer assessmentType);
+    UserAssessment getLatestAssessment(Integer userId, String version);
 
     /**
      * 统计用户指定类型的测评次数
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @return 测评次数
      */
-    int countUserAssessments(Integer userId, Integer assessmentType);
+    int countUserAssessments(Integer userId, String version);
 
     /**
      * 统计用户指定类型在指定月份内的测评次数
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @param startDate 开始日期
      * @param endDate 结束日期
      * @return 测评次数
      */
-    int countUserAssessmentsInMonth(Integer userId, Integer assessmentType, Date startDate, Date endDate);
+    int countUserAssessmentsInMonth(Integer userId, String version, Date startDate, Date endDate);
 
     /**
      * 检查用户是否在指定月份内已进行过该类型测评
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @param date 检查的日期
      * @return 是否已进行过
      */
-    boolean hasAssessedInMonth(Integer userId, Integer assessmentType, Date date);
+    boolean hasAssessedInMonth(Integer userId, String version, Date date);
 
     /**
      * 获取用户指定类型测评的上次测评时间
      *
      * @param userId 用户ID
-     * @param assessmentType 测评类型
+     * @param version 测评类型
      * @return 上次测评时间，如果没有则返回null
      */
-    Date getLastAssessmentTime(Integer userId, Integer assessmentType);
+    Date getLastAssessmentTime(Integer userId, String version);
 
     /**
      * 测评检查结果类

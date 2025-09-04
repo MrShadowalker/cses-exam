@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.mindskip.xzs.domain.entity.UserAssessment">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="assessment_type" jdbcType="INTEGER" property="assessmentType" />
+    <result column="version" jdbcType="VARCHAR" property="assessmentType" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="grant_time" jdbcType="TIMESTAMP" property="grantTime" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
@@ -16,7 +16,7 @@
   </resultMap>
   
   <sql id="Base_Column_List">
-    id, user_id, assessment_type, status, grant_time, start_time, complete_time, result_data, 
+    id, user_id, version, status, grant_time, start_time, complete_time, result_data,
     create_time, update_time, deleted
   </sql>
   
@@ -27,33 +27,33 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
-  <select id="selectByUserIdAndType" resultMap="BaseResultMap">
+  <select id="selectByUserIdAndVersion" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_user_assessment
     where user_id = #{userId,jdbcType=INTEGER}
-    and assessment_type = #{assessmentType,jdbcType=INTEGER}
+    and version = #{version,jdbcType=VARCHAR}
     and deleted = 0
     order by create_time desc
   </select>
   
-  <select id="selectLatestByUserIdAndType" resultMap="BaseResultMap">
+  <select id="selectLatestByUserIdAndVersion" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_user_assessment
     where user_id = #{userId,jdbcType=INTEGER}
-    and assessment_type = #{assessmentType,jdbcType=INTEGER}
+    and version = #{version,jdbcType=VARCHAR}
     and deleted = 0
     order by create_time desc
     limit 1
   </select>
   
-  <select id="selectByUserIdAndTypeInMonth" resultMap="BaseResultMap">
+  <select id="selectByUserIdAndVersionInMonth" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_user_assessment
     where user_id = #{userId,jdbcType=INTEGER}
-    and assessment_type = #{assessmentType,jdbcType=INTEGER}
+    and version = #{version,jdbcType=VARCHAR}
     and grant_time >= #{startDate,jdbcType=TIMESTAMP}
     and grant_time &lt; #{endDate,jdbcType=TIMESTAMP}
     and deleted = 0
@@ -78,19 +78,19 @@
     order by create_time desc
   </select>
   
-  <select id="countByUserIdAndType" resultType="int">
+  <select id="countByUserIdAndVersion" resultType="int">
     select count(*)
     from t_user_assessment
     where user_id = #{userId,jdbcType=INTEGER}
-    and assessment_type = #{assessmentType,jdbcType=INTEGER}
+    and version = #{version,jdbcType=VARCHAR}
     and deleted = 0
   </select>
   
-  <select id="countByUserIdAndTypeInMonth" resultType="int">
+  <select id="countByUserIdAndVersionInMonth" resultType="int">
     select count(*)
     from t_user_assessment
     where user_id = #{userId,jdbcType=INTEGER}
-    and assessment_type = #{assessmentType,jdbcType=INTEGER}
+    and version = #{version,jdbcType=VARCHAR}
     and grant_time >= #{startDate,jdbcType=TIMESTAMP}
     and grant_time &lt; #{endDate,jdbcType=TIMESTAMP}
     and deleted = 0
@@ -102,11 +102,11 @@
   </delete>
   
   <insert id="insert" parameterType="com.mindskip.xzs.domain.entity.UserAssessment" useGeneratedKeys="true" keyProperty="id">
-    insert into t_user_assessment (user_id, assessment_type, status, 
+    insert into t_user_assessment (user_id, version, status,
       grant_time, start_time, complete_time, 
       result_data, create_time, update_time, 
       deleted)
-    values (#{userId,jdbcType=INTEGER}, #{assessmentType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+    values (#{userId,jdbcType=INTEGER}, #{version,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
       #{grantTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, #{completeTime,jdbcType=TIMESTAMP}, 
       #{resultData,jdbcType=LONGVARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{deleted,jdbcType=BIT})
@@ -118,8 +118,8 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="assessmentType != null">
-        assessment_type,
+      <if test="version != null">
+        version,
       </if>
       <if test="status != null">
         status,
@@ -150,8 +150,8 @@
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
       </if>
-      <if test="assessmentType != null">
-        #{assessmentType,jdbcType=INTEGER},
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -186,8 +186,8 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="assessmentType != null">
-        assessment_type = #{assessmentType,jdbcType=INTEGER},
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -220,7 +220,7 @@
   <update id="updateByPrimaryKey" parameterType="com.mindskip.xzs.domain.entity.UserAssessment">
     update t_user_assessment
     set user_id = #{userId,jdbcType=INTEGER},
-      assessment_type = #{assessmentType,jdbcType=INTEGER},
+      version = #{version,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       grant_time = #{grantTime,jdbcType=TIMESTAMP},
       start_time = #{startTime,jdbcType=TIMESTAMP},
